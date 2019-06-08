@@ -1,14 +1,112 @@
+/*----colors*/
+.bckPrimaryColor {
+    background-color: rgb(31, 26, 26);
+}
+
+.bckgSecondaryColor {
+    background-color: rgb(48, 44, 44);
+}
+
+.green {
+    color: darkgreen;
+}
+
+.red {
+    color: red;
+}
+
+.yellow {
+    color: rgb(197, 197, 3);
+}
+
+/*----main*/
 body {
     margin: 0;
     height: 100%;
+    font-size: 14px;
     background-image: url("../images/simon-game-bckground.jpg");
     background-repeat: no-repeat;
     background-size: 100% 98%;
     background-attachment: fixed;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .bckgroundImageCover {
+    position: absolute;
+    top: 0;
+    left:0;
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     background-color: rgba(0, 0, 0, .5);
+    z-index: -1;
 }
+
+/*--section*/
+.panel {
+    border: 2px solid rgb(48, 44, 44);
+}
+.disclaimer {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 30vw;
+    color: rgb(212, 211, 211);
+    text-align: center;
+}
+
+/*--footer*/
+footer {
+    position: absolute;
+    top: 90vh;
+    height: 150px;
+    width: 100vw;
+    padding-top: 30px;
+}
+
+footer .input-group {
+    left: 45%;
+}
+
+footer .input-group-btn:last-child>.btn {
+    margin: 0;
+}
+
+footer .input-group-btn:last-child>.btn, 
+    .input-group-btn:last-child>.dropdown-toggle {
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+footer .input-group-btn:first-child>.btn,.input-group-btn:first-child>.dropdown-toggle {
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+footer button p {
+    font-size: 14px
+}
+
+footer .dropdown-menu {
+    min-width: 97px;
+    color:rgb(48, 44, 44);
+}
+
+footer .feedback-panel{
+    width: 50%;
+}
+
+footer .panel-heading {
+    height: 35px;
+}
+
+footer .panel-heading p{
+    margin: 0;
+}
+footer .panel-body{
+    min-height: 62px;
+    padding: 8px 0 8px;
+}
+footer .icon-set {
+    margin-top: 6px;
+    font-size: 28px;
+}
+

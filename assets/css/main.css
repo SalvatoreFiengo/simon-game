@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+    height: 100%;
+    background-image: url("../images/simon-game-bckground.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 98%;
+    background-attachment: fixed;
+}
+
+.bckgroundImageCover {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, .5);
+}

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Baloo+Da&display=swap:400,500,600,700,800');
+
 /*----colors*/
 .bckPrimaryColor {
     background-color: rgb(31, 26, 26);
@@ -23,13 +25,18 @@
 body {
     margin: 0;
     height: 100%;
+    font-family: "Baloo Da", cursive, "Sans-serif";
     font-size: 14px;
     background-image: url("../images/simon-game-bckground.jpg");
     background-repeat: no-repeat;
-    background-size: 100% 98%;
+    background-size: 100vw 98vh;
     background-attachment: fixed;
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+.simonFont {
+    font-family: "Baloo Da", cursive, "Sans-serif";
 }
 
 .bckgroundImageCover {
@@ -42,14 +49,18 @@ body {
     z-index: -1;
 }
 
-/*--section*/
 .panel {
     border: 2px solid rgb(48, 44, 44);
 }
+
+/*--section*/
+
 .disclaimer {
     margin-top: 40px;
     margin-bottom: 40px;
-    width: 30vw;
+    max-width: 40vw;
+    min-width: 320px;
+    width: 100%;
     color: rgb(212, 211, 211);
     text-align: center;
 }
@@ -58,55 +69,34 @@ body {
 footer {
     position: absolute;
     top: 90vh;
-    height: 150px;
+    min-height: 150px;
     width: 100vw;
-    padding-top: 30px;
+    padding: 30px 0 10px;
 }
 
-footer .input-group {
-    left: 45%;
+.footer-menu {
+    max-width: 35%;
+    min-width: 140px; 
 }
 
-footer .input-group-btn:last-child>.btn {
-    margin: 0;
+.footer-menu .list-group-item{
+    background-color: rgb(212, 211, 211);
+    border-color: rgb(31, 26, 26);
 }
 
-footer .input-group-btn:last-child>.btn, 
-    .input-group-btn:last-child>.dropdown-toggle {
-    border-top-left-radius: 2px;
-    border-bottom-left-radius: 2px;
-}
-footer .input-group-btn:first-child>.btn,.input-group-btn:first-child>.dropdown-toggle {
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-}
-
-footer button p {
-    font-size: 14px
-}
-
-footer .dropdown-menu {
-    min-width: 97px;
+.footer-menu .list-group-item a {
+    text-decoration: none;
     color:rgb(48, 44, 44);
 }
-
-footer .feedback-panel{
-    width: 50%;
-}
-
-footer .panel-heading {
-    height: 35px;
-}
-
-footer .panel-heading p{
-    margin: 0;
-}
-footer .panel-body{
-    min-height: 62px;
-    padding: 8px 0 8px;
-}
 footer .icon-set {
-    margin-top: 6px;
     font-size: 28px;
 }
 
+/*--Media queries--*/
+
+@media only screen and (min-width: 768px){
+    
+    .caret {
+        display:none;
+    }
+} 

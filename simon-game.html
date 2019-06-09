@@ -31,12 +31,45 @@
 </head>
 <body>
     <div class="bckgroundImageCover"></div>
-    <section>
-        <div class="panel panel-default center-block disclaimer bckPrimaryColor">
-            <div class="panel-body">
-              <h1 class="simonFont">Simon</h1>
-              <h3 class="simonFont">The Electronic Game</h3>
-              <h5 class="simonFont">Web version 1.0</h5>
+    <section class="center-block centered-size-section">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-default disclaimer bckPrimaryColor">
+                    <div class="panel-body">
+                        <h1>Simon</h1>
+                        <h3>The Electronic Game</h3>
+                        <h5>Web version 1.0</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-cockpit text-center">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <button id="home" class="btn btn-custom buttonBckYellow hidden">Home</button>
+                            <button id="rules" class="btn btn-custom buttonBckYellow">Rules</button>
+                        </div>
+                        <div class="col-xs-4">
+                            <button class="btn btn-custom buttonBckRed">Play</button>
+                        </div>
+                        <div class="col-xs-4">
+                            <button class="btn btn-custom buttonBckYellow">Help</button>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sx-12">
+                <div class="panel panel-default disclaimer bckPrimaryColor">
+                    <div class="panel-body custom-scrollbar">
+                        <p id="paraghraphBoard" class="secondaryFont">
+
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>  
@@ -76,5 +109,7 @@
             </div>
         </div>
     </footer>  
+    <script src="./assets/js/paragraphs.js"></script>
+    <script src="./assets/js/main.js"></script>
 </body>
 </html>

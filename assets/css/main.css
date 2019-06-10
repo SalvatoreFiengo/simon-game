@@ -111,10 +111,6 @@ section {
 }
 
 
-.hide-element {
-    display: none;
-}
-
 .show-element-as-inlineBlock {
     display: inline-block;
 }

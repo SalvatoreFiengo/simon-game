@@ -1,12 +1,24 @@
+/*--Fonts--*/
+
 @import url('https://fonts.googleapis.com/css?family=Baloo+Da&display=swap:400,500,600,700,800');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap:400,500,600,700,800');
 
 /*----colors*/
+
 .bckPrimaryColor {
     background-color: rgb(31, 26, 26);
 }
 
 .bckgSecondaryColor {
     background-color: rgb(48, 44, 44);
+}
+
+.buttonBckRed {
+    background-color: red;
+}
+
+.buttonBckYellow {
+    background-color:rgb(197, 197, 3);
 }
 
 .green {
@@ -22,8 +34,18 @@
 }
 
 /*----main*/
+html {
+    min-height: 100%;
+    scrollbar-width: 0; /*firefox */
+    -ms-overflow-style: none; /*ie 10+ */
+}
+
+html::-webkit-scrollbar {
+    width: 0;
+}
+
 body {
-    margin: 0;
+    margin:0;
     height: 100%;
     font-family: "Baloo Da", cursive, "Sans-serif";
     font-size: 14px;
@@ -31,23 +53,28 @@ body {
     background-repeat: no-repeat;
     background-size: 100vw 98vh;
     background-attachment: fixed;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow-x:hidden;
 }
 
-.simonFont {
-    font-family: "Baloo Da", cursive, "Sans-serif";
+.secondaryFont {
+    font-family: "Roboto", "Sans-serif";
 }
-/*--change--*/
+
 .bckgroundImageCover {
     position: absolute;
     top: 0;
     left:0;
-    height: 100vh;
-    width: 100%;
+    min-height: 100vh;
+    width: 100vw;
     background-color: rgba(0, 0, 0, .5);
     z-index: -1;
 }
+
+/* .page-wrapper {
+    position: relative;
+    min-height: 100vh;
+    height: 100%;
+} */
 
 .panel {
     border: 2px solid rgb(48, 44, 44);
@@ -55,22 +82,74 @@ body {
 
 /*--section*/
 
+section {
+    position: relative;
+}
+
 .disclaimer {
     margin-top: 40px;
     margin-bottom: 40px;
-    max-width: 40vw;
-    min-width: 320px;
-    width: 100%;
     color: rgb(212, 211, 211);
     text-align: center;
 }
 
+.centered-size-section {
+    max-width: 40vw;
+    min-width: 320px;
+    width: 100%;
+}
+
+.page-cockpit {
+    margin: 15px 0 15px 0;
+}
+
+.btn-custom {
+    border: 1.5px solid rgb(48, 44, 44);
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+}
+
+
+.hide-element {
+    display: none;
+}
+
+.show-element-as-inlineBlock {
+    display: inline-block;
+}
+
+.panel-body {
+    max-height: 40vh;
+}
+
+.custom-scrollbar{
+    overflow-y: scroll;
+    scrollbar-width: 1em;
+    -ms-overflow-style: scrollbar ; /*ie 10+ */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+.custom-scrollbar::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, .5);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+canvas {
+    display: none;
+}
+
 /*--footer*/
+
 footer {
-    position: absolute;
-    top: 90vh;
-    min-height: 150px;
-    width: 100vw;
     padding: 30px 0 10px;
 }
 

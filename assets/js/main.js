@@ -1,38 +1,11 @@
 $(document).ready(function(){
-
+    
     // resize section based on footer height
 
-    $(window).resize(function() {
-        // footer menu < 768 px
+    $("footer").resize(function() {
 
         $("section").css("min-height", $(window).height() - $("footer").height() + "px");
-        
-        var listIdArr=['company','feedback','language']
 
-        if($(window).width()< 768){
-            $("#company>li").slice(1).hide();
-            $("#feedback>li").slice(1).hide();
-            $("#language>li").slice(1).hide();
-                
-            $("li:first-child").click(function(){
-                for(i=0; i<listIdArr.length; i++){
-                    
-                    if($(this).parent().attr("id") == listIdArr[i]){
-                        
-                        $(this).siblings().toggle();
-
-                    }
-                    else{
-                        $("#"+listIdArr[i]+">li").slice(1).hide();
-
-                    }
-                }                  
-            })
-        }else{
-            $("#company>li").slice(1).removeClass("hide-element");
-            $("#feedback>li").slice(1).removeClass("hide-element");
-            $("#language>li").slice(1).removeClass("hide-element");
-        }
       }).resize();
 
     // Add text dinamically based on paragraphs.js variables plus change buttons behaviour dinamically;
@@ -58,5 +31,19 @@ $(document).ready(function(){
         $("#canvas").fadeIn(500);
         
     });
+    // footer menu: when clicked will close other menus
+    $("footer ul>li:first-child").click(function(){
+        if($("footer").width()>767){
+            return
+        }else{
+            $(this).siblings().toggle();
+            var id=$(this).parent().attr("id");
+            $("ul:not(#"+id+") >li:first-child").siblings().hide();
+        }
+    })
+
+var toggleMenu = (event)=>{
+        console.log(event.target)
+    }
 
 });

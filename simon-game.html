@@ -31,6 +31,8 @@
 </head>
 <body>
     <div class="bckgroundImageCover"></div>
+
+   
     <section class="center-block centered-size-section">
         <div class="row">
             <div class="col-xs-12">
@@ -48,11 +50,11 @@
                 <div class="page-cockpit text-center">
                     <div class="row">
                         <div class="col-xs-4">
-                            <button id="home" class="btn btn-custom buttonBckYellow hidden">Home</button>
+                            <button id="home" class="btn btn-custom buttonBckYellow hide-element">Home</button>
                             <button id="rules" class="btn btn-custom buttonBckYellow">Rules</button>
                         </div>
                         <div class="col-xs-4">
-                            <button class="btn btn-custom buttonBckRed">Play</button>
+                            <button id="game" class="btn btn-custom buttonBckRed">Game</button>
                         </div>
                         <div class="col-xs-4">
                             <button class="btn btn-custom buttonBckYellow">Help</button>
@@ -65,6 +67,7 @@
             <div class="col-sx-12">
                 <div class="panel panel-default disclaimer bckPrimaryColor">
                     <div class="panel-body custom-scrollbar">
+                        <canvas id="canvas"></canvas>
                         <p id="paraghraphBoard" class="secondaryFont">
 
                         </p>
@@ -74,41 +77,43 @@
         </div>
     </section>  
     <footer class="bckPrimaryColor">
-        <div class="row">
+        <div id="footer-menu" class="row">
             <div class="col-xs-12 col-sm-4">
-                <ul class="list-group footer-menu center-block text-center">
-                    <li class="list-group-item"><a href="#">Our Company <span class="caret"></span></a></li>
-                    <li class="list-group-item"><a href="#">Contact us</a></li>
-                    <li class="list-group-item"><a href="#">Work with us</a></li>
+                <ul id="company" class="list-group footer-menu center-block text-center">
+                    <li class="list-group-item"><a>Our Company <span class="caret"></span></a></li>
+                    <li class="list-group-item"><a>Contact us</a></li>
+                    <li class="list-group-item"><a>Work with us</a></li>
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-4">
-                <ul class="list-group footer-menu center-block text-center">
-                    <li class="list-group-item"><a href="#">Your Feedback <span class="caret"></span></a></li>
+                <ul id="feedback" class="list-group footer-menu center-block text-center">
+                    <li class="list-group-item"><a>Your Feedback <span class="caret"></span></a></li>
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-xs-4">
-                                <a href="#"><i class="fa fa-smile-o icon-set green"></i></a>
+                                <a href="#feedback"><i class="fa fa-smile-o icon-set green"></i></a>
                             </div>
                             <div class="col-xs-4">
-                                <a href="#"><i class="fa fa-meh-o icon-set yellow"></i></a>
+                                <a href="#feedback"><i class="fa fa-meh-o icon-set yellow"></i></a>
                             </div>
                             <div class="col-xs-4">
-                                <a href="#"><i class="fa fa-frown-o icon-set red"></i></a>
+                                <a href="#feedback"><i class="fa fa-frown-o icon-set red"></i></a>
                             </div>
                         </div>
                     </li>
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-4">
-                <ul class="list-group footer-menu center-block text-center">
-                    <li class="list-group-item"><a href="#">Language <span class="caret"></span></a></li>
-                    <li class="list-group-item"><a href="#">Italian</a></li>
-                    <li class="list-group-item"><a href="#">English</a></li>
+                <ul id="language" class="list-group footer-menu center-block text-center">
+                    <li class="list-group-item"><a>Language <span class="caret"></span></a></li>
+                    <li class="list-group-item"><a>Italian</a></li>
+                    <li class="list-group-item"><a>English</a></li>
                 </ul>                
             </div>
         </div>
     </footer>  
+    
+
     <script src="./assets/js/paragraphs.js"></script>
     <script src="./assets/js/main.js"></script>
 </body>

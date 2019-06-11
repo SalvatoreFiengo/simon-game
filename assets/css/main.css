@@ -35,6 +35,7 @@
 
 /*----main*/
 html {
+    min-height: 100%;
     scrollbar-width: 0; /*firefox */
     -ms-overflow-style: none; /*ie 10+ */
 }
@@ -63,17 +64,27 @@ body {
     position: absolute;
     top: 0;
     left:0;
-    height: 100vh;
-    width: 100%;
+    min-height: 100vh;
+    width: 100vw;
     background-color: rgba(0, 0, 0, .5);
     z-index: -1;
 }
+
+/* .page-wrapper {
+    position: relative;
+    min-height: 100vh;
+    height: 100%;
+} */
 
 .panel {
     border: 2px solid rgb(48, 44, 44);
 }
 
 /*--section*/
+
+section {
+    position: relative;
+}
 
 .disclaimer {
     margin-top: 40px;
@@ -97,6 +108,15 @@ body {
     border-radius: 50%;
     height: 60px;
     width: 60px;
+}
+
+
+.hide-element {
+    display: none;
+}
+
+.show-element-as-inlineBlock {
+    display: inline-block;
 }
 
 .panel-body {
@@ -123,13 +143,13 @@ body {
   outline: 1px solid slategrey;
 }
 
+canvas {
+    display: none;
+}
+
 /*--footer*/
 
 footer {
-    position: absolute;
-    top: 95vh;
-    min-height: 150px;
-    width: 100vw;
     padding: 30px 0 10px;
 }
 
@@ -153,9 +173,22 @@ footer .icon-set {
 
 /*--Media queries--*/
 
+@media only screen and (max-width: 767px){
+    footer .list-group {
+        margin-bottom: 1px
+    }
+    footer ul>li.list-group-item:not(:first-child){ 
+        display: none;
+    }
+}
 @media only screen and (min-width: 768px){
     
     .caret {
         display:none;
     }
+    /*force li to display block over jQuery*/
+    footer ul>li{ 
+        display: block !important;
+    }
+
 } 

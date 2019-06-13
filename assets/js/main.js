@@ -5,6 +5,7 @@ $(document).ready(function(){
     $("footer").resize(function() {
 
         $("section").css("min-height", $(window).height() - $("footer").height() + "px");
+        simon.myCanvas.width = $("#canvas-wrap").width() * .9;
 
       }).resize();
 
@@ -42,8 +43,12 @@ $(document).ready(function(){
         }
     })
 
-var toggleMenu = (event)=>{
-        console.log(event.target)
-    }
-
+    simon.createCanvas(simon.myCanvas, simon.canvasHeight);
+    simon.ctx.beginPath();
+    simon.circle.draw();
+    simon.blueButton.draw();
+    simon.redButton.draw();
+    simon.greenButton.draw();
+    simon.yellowButton.draw();
+    simon.smallCircle.draw();
 });

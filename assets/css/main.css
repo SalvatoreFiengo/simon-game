@@ -121,6 +121,7 @@ section {
 
 .panel-body {
     max-height: 40vh;
+    padding: 0;
 }
 
 .custom-scrollbar{
@@ -143,8 +144,12 @@ section {
   outline: 1px solid slategrey;
 }
 
+/*--canvas--*/
+
 canvas {
     display: none;
+    margin: 0 auto;
+    background-color: transparent;
 }
 
 /*--footer*/

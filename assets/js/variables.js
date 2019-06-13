@@ -1,0 +1,12 @@
+var simon ={};
+simon.ctx = null;
+simon.myCanvas = document.getElementById("canvas");
+simon.ratio = .8;
+simon.canvasWidth = simon.myCanvas.width;
+simon.canvasHeight = simon.myCanvas.width * simon.ratio;
+simon.centerX = simon.canvasWidth/2;
+simon.centerY = simon.canvasHeight/2;
+simon.bigRadius = simon.canvasWidth/2.5;
+simon.smallRadius = simon.canvasWidth/2.75;
+simon.innerCirle = simon.canvasWidth/10;
+simon.path;

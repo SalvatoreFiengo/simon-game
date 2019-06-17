@@ -1,15 +1,20 @@
 
-simon.createCanvas = function getCanvas(canvas, height){
-
+simon.createCanvas = function getCanvas(canvas, width, height){
+        
         if(canvas.getContext){
-            typeof(height)? "string": height.toString();
-            canvas.height = height;
+            typeof(width)? "string": width.toString();
+            canvas.width = width *dpi;
+            canvas.height = height *dpi;
             return simon.ctx = canvas.getContext("2d");
         }else{
             return `<h2> canvas not supported! </h2>`;
         }
  
 }
+
+simon.animateDpiCanvas = function reDrawDpiCanvas(){
+    simon.canvasDpiID = requestAnimationFrame(reDrawDpiCanvas);
+} 
 
 simon.drawObj = class CanvasObj{
     constructor(kind = "circle", path, x, y, r, start = 0, end, color, fill = true,endColor = null, antiClockwise = false){
@@ -59,6 +64,33 @@ simon.drawObj = class CanvasObj{
 
 }
 
+simon.drawAll= function drawAll(){
+    
+    this.createCanvas(simon.myCanvas, simon.canvasWidth, simon.canvasHeight)
+    this.ctx.imageSmoothingEnabled=false;
+    let bigRadius = null;
+    let smallRadius = null;
+    let innerCirle = null;
+
+    bigRadius = this.canvasWidth/2.5;
+    smallRadius = this.canvasWidth/2.75;
+    innerCirle = this.canvasWidth/5;
+
+    this.centerX = this.myCanvas.width/2;
+    this.centerY = this.myCanvas.height/2;
+    this.bigRadius = bigRadius;
+    this.smallRadius = smallRadius;
+    this.innerCirle = innerCirle;
+    this.circle.x = this.centerX;
+    
+    this.ctx.beginPath();
+    this.circle.draw();
+    this.blueButton.draw();
+    this.redButton.draw();
+    this.greenButton.draw();
+    this.yellowButton.draw();
+    this.smallCircle.draw();
+}
 
 /*--setting up the canvas objects, circles, and buttons */
 
@@ -68,3 +100,4 @@ simon.blueButton = new simon.drawObj("Blue Button", simon.path, simon.centerX, s
 simon.redButton = new simon.drawObj("Red Button", simon.path, simon.centerX, simon.centerY, simon.smallRadius,1.52,1.98, "red", "#fa7268" )
 simon.greenButton = new simon.drawObj("Green Button",simon.path, simon.centerX, simon.centerY, simon.smallRadius,0.52,0.98, "green" )
 simon.yellowButton = new simon.drawObj("Yellow Button", simon.path, simon.centerX, simon.centerY, simon.smallRadius,1.02,1.48, "yellow" )
+

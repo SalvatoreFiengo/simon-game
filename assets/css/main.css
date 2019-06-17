@@ -35,7 +35,8 @@
 
 /*----main*/
 html {
-    min-height: 100%;
+    height: 100%;
+    width: 100%;
     scrollbar-width: 0; /*firefox */
     -ms-overflow-style: none; /*ie 10+ */
 }
@@ -45,13 +46,16 @@ html::-webkit-scrollbar {
 }
 
 body {
+    position: relative;
     margin:0;
-    height: 100%;
+    min-height: 100%;
+    min-width: 100%;
     font-family: "Baloo Da", cursive, "Sans-serif";
     font-size: 14px;
     background-image: url("../images/simon-game-bckground.jpg");
     background-repeat: no-repeat;
-    background-size: 100vw 98vh;
+    background-position: center;
+    background-size: cover;
     background-attachment: fixed;
     overflow-x:hidden;
 }
@@ -64,17 +68,15 @@ body {
     position: absolute;
     top: 0;
     left:0;
-    min-height: 100vh;
+    bottom:0;
     width: 100vw;
     background-color: rgba(0, 0, 0, .5);
     z-index: -1;
 }
 
-/* .page-wrapper {
-    position: relative;
-    min-height: 100vh;
-    height: 100%;
-} */
+.row {
+    margin: 0;
+}
 
 .panel {
     border: 2px solid rgb(48, 44, 44);
@@ -82,13 +84,8 @@ body {
 
 /*--section*/
 
-section {
-    position: relative;
-}
-
 .disclaimer {
     margin-top: 40px;
-    margin-bottom: 40px;
     color: rgb(212, 211, 211);
     text-align: center;
 }
@@ -115,13 +112,12 @@ section {
     display: none;
 }
 
-.show-element-as-inlineBlock {
-    display: inline-block;
+.panel-body {
+    padding: 0;
 }
 
-.panel-body {
+#paraghraphBoard {
     max-height: 40vh;
-    padding: 0;
 }
 
 .custom-scrollbar{
@@ -144,12 +140,36 @@ section {
   outline: 1px solid slategrey;
 }
 
-/*--canvas--*/
+/*--game area & canvas--*/
 
-canvas {
+#game-wrap {
     display: none;
-    margin: 0 auto;
+    margin: 0;
+}
+
+.game-cockpit {
+    min-height: 5vh;
+}
+
+#game-table{
+    height: 100%
+}
+table tr {
+    font-size: 20px;
+}
+
+td.canvas-cell {
+    vertical-align: middle !important;
+}
+
+#canvas {
+    display: inline;
     background-color: transparent;
+    width: 42%;
+}
+.progress-wrap {
+    width: 70%;
+    min-height: 10vh; 
 }
 
 /*--footer*/
@@ -157,15 +177,22 @@ canvas {
 footer {
     padding: 30px 0 10px;
 }
-
+footer .row {
+    margin: 0;
+}
 .footer-menu {
     max-width: 35%;
     min-width: 140px; 
+    width: 100%;
 }
 
 .footer-menu .list-group-item{
     background-color: rgb(212, 211, 211);
     border-color: rgb(31, 26, 26);
+}
+.footer-menu .list-group-item .col-xs-4 {
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .footer-menu .list-group-item a {
@@ -178,7 +205,15 @@ footer .icon-set {
 
 /*--Media queries--*/
 
+@media screen and (orientation: portrait){
+
+}
 @media only screen and (max-width: 767px){
+
+    #canvas{
+        width: 100%;
+    }
+    
     footer .list-group {
         margin-bottom: 1px
     }
@@ -196,4 +231,12 @@ footer .icon-set {
         display: block !important;
     }
 
+}
+
+@media only screen and (min-width: 1024px){
+
+    .disclaimer {
+        margin-top: 50px;
+        margin-bottom: 50px
+    }
 } 

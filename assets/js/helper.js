@@ -5,3 +5,4 @@ function getMousePos(canvas, event){
         y: parseInt(event.clientY-rect.top)
     };
 }
+

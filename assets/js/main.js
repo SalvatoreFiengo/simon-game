@@ -2,36 +2,44 @@ $(document).ready(function(){
     
     // resize section based on footer height
 
-    $("footer").resize(function() {
+    $(window).on("resize load",function() {
 
         $("section").css("min-height", $(window).height() - $("footer").height() + "px");
-        simon.myCanvas.width = $("#canvas-wrap").width() * .9;
-
-      }).resize();
+    }).resize();
 
     // Add text dinamically based on paragraphs.js variables plus change buttons behaviour dinamically;
+    
+    $("#paraghraphBoard p").text(description);
 
-    $("#paraghraphBoard").text(description);
-
-    $("#rules").click(function(){
-        $("#paraghraphBoard").text(rules);
-        $(this).removeClass("show-element-as-inlineBlock").addClass("hide-element");
-        $("#home").removeClass("hide-element").addClass("show-element-as-inlineBlock");
+    $("#switch-home-rules").click(function(){
+        if($("#paraghraphBoard p").text()== description){
+            $("#paraghraphBoard p").text(rules)
+            $(this).text("Home");
+            return
+        }
+        $("#paraghraphBoard p").text(description);
+        // $(this).removeClass("show-element-as-inlineBlock").addClass("hide-element");
+        // $("#home").removeClass("hide-element").addClass("show-element-as-inlineBlock");
+        $(this).text("Rules");
     })
 
-    $("#home").click(function(){
-        $("#paraghraphBoard").text(description);
-        
-        $(this).removeClass("show-element-as-inlineBlock").addClass("hide-element");
-        $("#rules").removeClass("hide-element").addClass("show-element-as-inlineBlock");
-    });
+
 
     $("#game").click(function(){
-        $("#paraghraphBoard").fadeOut(500);
-        $("button").fadeOut();
-        $("#canvas").fadeIn(500);
+        $("#main-page").slideUp(200);
+        simon.drawAll()
+        simon.animateDpiCanvas();
         
+        $("#game-wrap").fadeIn(500);  
     });
+
+    $("#quit-game").click(function(){
+        $("#game-wrap").fadeOut(200);
+        cancelAnimationFrame(simon.canvasDpiID);
+        $("button").fadeIn(500);
+        $("#paraghraphBoard").slideDown(500);
+    })
+
     // footer menu: when clicked will close other menus
     $("footer ul>li:first-child").click(function(){
         if($("footer").width()>767){
@@ -42,13 +50,4 @@ $(document).ready(function(){
             $("ul:not(#"+id+") >li:first-child").siblings().hide();
         }
     })
-
-    simon.createCanvas(simon.myCanvas, simon.canvasHeight);
-    simon.ctx.beginPath();
-    simon.circle.draw();
-    simon.blueButton.draw();
-    simon.redButton.draw();
-    simon.greenButton.draw();
-    simon.yellowButton.draw();
-    simon.smallCircle.draw();
 });

@@ -18,7 +18,7 @@ simon.animateDpiCanvas = function reDrawDpiCanvas(){
 
 simon.drawObj = class CanvasObj{
     constructor(kind = "circle", path, x, y, r, start = 0, end, color, fill = true,endColor = null, antiClockwise = false){
-        this.kind = kind;
+        this.kind = kind.toString();
         this.path = path;
         this.x = x;
         this.y =y;
@@ -36,24 +36,18 @@ simon.drawObj = class CanvasObj{
         var newColor;
 
         this.endColor == null ? newColor = "light"+this.color : newColor = this.endColor;
-        this.name == "circle" ? simon.ctx.fillStyle= " " : newColor = this.color;
-
-        if (simon.ctx.fillStyle == " "){
+      
+        simon.ctx.fillStyle = newColor;
+        this.fill? simon.ctx.fill(this.path): simon.ctx.stroke(this.path);
+        
+        setTimeout(()=>{
             simon.ctx.fillStyle = this.color;
             this.fill? simon.ctx.fill(this.path): simon.ctx.stroke(this.path);
-            
-        }else{
-            simon.ctx.fillStyle = newColor;
-            this.fill? simon.ctx.fill(this.path): simon.ctx.stroke(this.path);
-            
-            setTimeout(()=>{
-                simon.ctx.fillStyle = this.color;
-                this.fill? simon.ctx.fill(this.path): simon.ctx.stroke(this.path);
 
-            }, 300)
+        }, 300)
 
-        }
     }
+    
     draw(){
         this.path = new Path2D();
         this.path.arc(simon.centerX, simon.centerY, this.r, Math.PI*this.start, Math.PI*this.end, this.antiClockwise)

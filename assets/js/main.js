@@ -34,8 +34,7 @@ $(document).ready(function(){
     $("#quit-game").click(function(){
         $("#game-wrap").fadeOut(200);
         cancelAnimationFrame(simon.canvasDpiID);
-        $("button").fadeIn(500);
-        $("#paraghraphBoard").slideDown(500);
+        $("#main-page").slideDown(200);
     })
 
     // footer menu: when clicked will close other menus

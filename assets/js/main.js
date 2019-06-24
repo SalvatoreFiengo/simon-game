@@ -18,8 +18,6 @@ $(document).ready(function(){
             return
         }
         $("#paraghraphBoard p").text(description);
-        // $(this).removeClass("show-element-as-inlineBlock").addClass("hide-element");
-        // $("#home").removeClass("hide-element").addClass("show-element-as-inlineBlock");
         $(this).text("Rules");
     })
 

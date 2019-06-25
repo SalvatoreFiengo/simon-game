@@ -27,11 +27,28 @@ $(document).ready(function(){
         $("#main-page").slideUp(200);
         simon.drawAll()
         simon.animateDpiCanvas();
-        
-        $("#game-wrap").fadeIn(500);  
+        $("#game-wrap").fadeIn(500);
+
+        setTimeout(() => {
+            
+            intro()
+            setTimeout(function(){
+          
+                simon.buttonArr.forEach((item)=>{
+                    item.clicked = true;
+                    item.setColor()
+                })
+
+            },1500)
+        },501)
+
     });
 
-    $("#quit-game").click(function(){
+    $("#canvas").click(function() {
+        simon.buttonArr.forEach((item) => canvasButtonIsClicked(item, event));
+    })
+
+    $("#quit-game").click(function() {
         $("#game-wrap").fadeOut(200);
         cancelAnimationFrame(simon.canvasDpiID);
         $("#main-page").slideDown(200);

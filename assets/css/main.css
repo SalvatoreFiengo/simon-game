@@ -166,6 +166,7 @@ td.canvas-cell {
     display: inline;
     background-color: transparent;
     width: 42%;
+    cursor: pointer;
 }
 .progress-wrap {
     width: 70%;
@@ -216,6 +217,9 @@ footer .icon-set {
     
     footer .list-group {
         margin-bottom: 1px
+    }
+    footer ul>li.list-group-item:first-child {
+        cursor: pointer;
     }
     footer ul>li.list-group-item:not(:first-child){ 
         display: none;

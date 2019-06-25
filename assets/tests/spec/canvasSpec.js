@@ -12,6 +12,7 @@ describe("simon Canvasobj-class", function(){
         fill: true,
         endColor: null,
         antiClockwise: false,
+        clicked: true,
         ctx: {
             fillStyle : " ", 
             fill: " ",
@@ -23,14 +24,27 @@ describe("simon Canvasobj-class", function(){
 
             var newColor;
 
-            newCanvasObj.endColor == null ? newColor = "light"+newCanvasObj.color : newColor = newCanvasObj.endColor;
-            newCanvasObj.ctx.fillStyle = newColor;
+            if(newCanvasObj.endColor == null && newCanvasObj.color != "black"){
+                newColor = "light"+ newCanvasObj.color;
+            }else if(newCanvasObj.color == "black"){
+                newCanvasObj.clicked = false;
+            }else{
+                newColor = newCanvasObj.endColor;
+            }
+            
+            newCanvasObj.ctx.fillStyle = newCanvasObj.color;
             newCanvasObj.fill? newCanvasObj.ctx.filled(newCanvasObj.path): newCanvasObj.ctx.stroked(newCanvasObj.path);
-            setTimeout(()=>{
-                newCanvasObj.ctx.fillStyle = newCanvasObj.color;
+            
+            if(newCanvasObj.clicked){
+                newCanvasObj.ctx.fillStyle = newColor;
                 newCanvasObj.fill? newCanvasObj.ctx.filled(newCanvasObj.path): newCanvasObj.ctx.stroked(newCanvasObj.path);
-    
-            }, 300)
+
+                setTimeout(()=>{
+                    newCanvasObj.ctx.fillStyle = newCanvasObj.color;
+                    newCanvasObj.fill? newCanvasObj.ctx.filled(newCanvasObj.path): newCanvasObj.ctx.stroked(newCanvasObj.path);
+        
+                }, 300)
+            }
         }
             
     };
@@ -42,6 +56,8 @@ describe("simon Canvasobj-class", function(){
 
     afterEach(() => {
         newCanvasObj.fill = true;
+        newCanvasObj.clicked = true;
+        newCanvasObj.color = "yellow"
         jasmine.clock().uninstall();
     })
 
@@ -70,7 +86,7 @@ describe("simon Canvasobj-class", function(){
         expect(newCanvasObj.endColor).toBe(null);
     })
 
-    it("if newCanvasObj.endColor is null should set fillStyle property of ctx as lightyellow", () => {
+    it("if newCanvasObj.endColor is null should set fillStyle property of ctx as lightyellow before setTimeout is called", () => {
         // arrange
         spyOn(newCanvasObj, "setColor").and.callThrough();
 
@@ -80,6 +96,37 @@ describe("simon Canvasobj-class", function(){
         // expect
         expect(newCanvasObj.ctx.fillStyle).not.toBe(" ");
         expect(newCanvasObj.ctx.fillStyle).toBe("lightyellow");
+    })
+
+    it("if newCanvasObj.endColor is null && newCanvasObj.color is black should set fillStyle property of ctx as black before setTimeout is called", () => {
+        // arrange
+        newCanvasObj.color = "black"
+        spyOn(newCanvasObj, "setColor").and.callThrough();
+
+        // act
+        newCanvasObj.setColor();
+
+        // expect
+        expect(newCanvasObj.ctx.fillStyle).not.toBe(" ");
+        expect(newCanvasObj.ctx.fillStyle).toEqual("black");
+    })
+
+    it("should not call setTimeout if clicked is false", (done) => {
+        //arrange
+        newCanvasObj.clicked = false;
+        spyOn(newCanvasObj, "setColor").and.callThrough()
+        // act
+        newCanvasObj.setColor();
+        
+        setTimeout(() => {
+            
+            done()
+        },300)
+        jasmine.clock().tick(301);
+        // expect
+        expect(newCanvasObj.ctx.fillStyle).toBe("yellow"); 
+
+
     })
 
     it("newCanvasObj.ctx.fillStyle should be equal to color after timeout", (done) => {
@@ -130,7 +177,7 @@ describe("simon Canvasobj-class", function(){
 
 });
 
-describe("simon method draw all", () => {
+describe("simon mock method createCanvas", () => {
     // arrange
 
     let canvas;

@@ -64,7 +64,7 @@ simon.drawObj = class CanvasObj{
                 this.clicked = false; 
                 simon.smallCircle.draw();
                 simon.canvasText("green");               
-            }, 300);
+            }, simon.speed);
  
         }
 
@@ -139,4 +139,7 @@ simon.redButton = new simon.drawObj("Red", simon.path, simon.centerX, simon.cent
 simon.greenButton = new simon.drawObj("Green",simon.path, simon.centerX, simon.centerY, simon.smallRadius,0.52,0.98, "green" )
 simon.yellowButton = new simon.drawObj("Yellow", simon.path, simon.centerX, simon.centerY, simon.smallRadius,1.02,1.48, "yellow" )
 
-simon.buttonArr = [simon.blueButton, simon.redButton, simon.greenButton, simon.yellowButton]
+
+simon.buttonBaseArr=[simon.blueButton, simon.redButton, simon.greenButton, simon.yellowButton];
+
+

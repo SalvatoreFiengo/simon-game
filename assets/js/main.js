@@ -31,21 +31,22 @@ $(document).ready(function(){
 
         setTimeout(() => {
             
-            intro()
+            showHighlightedButtons(simon.buttonBaseArr)
             setTimeout(function(){
-          
-                simon.buttonArr.forEach((item)=>{
+                
+               simon.buttonBaseArr.forEach((item)=>{
                     item.clicked = true;
-                    item.setColor()
+                    item.setColor();
                 })
 
-            },1500)
+            },3500)
         },501)
 
     });
 
-    $("#canvas").click(function() {
-        simon.buttonArr.forEach((item) => canvasButtonIsClicked(item, event));
+    $("#play-game").off().click(function() {
+        simonGame();
+        // simon.buttonArr.forEach((item) => canvasButtonIsClicked(item, event));
     })
 
     $("#quit-game").click(function() {

@@ -3,7 +3,7 @@ var dpi = window.devicePixelRatio;
 var simon ={};
 
 simon.currentLevel = 0;
-simon.speed = 400;
+simon.speed = 500;
 simon.ctx = null;
 simon.myCanvas = document.getElementById("canvas");
 

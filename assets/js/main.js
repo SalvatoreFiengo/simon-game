@@ -31,7 +31,7 @@ $(document).ready(function(){
 
         setTimeout(() => {
             
-            showHighlightedButtons(simon.buttonBaseArr)
+            showHighlightedButtons(simon.buttonBaseArr, simon.speed)
             setTimeout(function(){
                 
                simon.buttonBaseArr.forEach((item)=>{
@@ -39,7 +39,7 @@ $(document).ready(function(){
                     item.setColor();
                 })
 
-            },3500)
+            },2500)
         },501)
 
     });

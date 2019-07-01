@@ -92,7 +92,7 @@ function simonTurn (){
     k= getRandomButton();
     simon.level.push(buttons[k]);
 
-    showHighlightedButtons(simon.level, simon.speed)}
+    showHighlightedButtons(simon.level, simon.speed)
 
     if(count<=20){
         

@@ -8,7 +8,9 @@ simon.createCanvas = function getCanvas(canvas, width, height){
 
             canvas.width = width *dpi;
             canvas.height = height *dpi;
-            return simon.ctx = canvas.getContext("2d");
+            simon.ctx = canvas.getContext("2d");
+            
+            return simon.ctx
         }else{
             return `<h2> canvas not supported! </h2>`;
         }
@@ -49,22 +51,25 @@ simon.drawObj = class CanvasObj{
 
         simon.ctx.fillStyle = this.color;
         this.fill? simon.ctx.fill(this.path): simon.ctx.stroke(this.path);
-        
-        if(this.clicked){
+    
 
+        if(this.clicked){
+            
             simon.ctx.fillStyle = newColor;
             this.fill? simon.ctx.fill(this.path): simon.ctx.stroke(this.path);
-
+            
             simon.smallCircle.draw();
             simon.canvasText("green");
-
+            
             setTimeout(()=>{
                 simon.ctx.fillStyle = this.color;
                 this.fill? simon.ctx.fill(this.path): simon.ctx.stroke(this.path);
                 this.clicked = false; 
+                
                 simon.smallCircle.draw();
-                simon.canvasText("green");               
-            }, simon.speed);
+                simon.canvasText("green");  
+                           
+            }, 400);
  
         }
 
@@ -102,7 +107,9 @@ simon.canvasText = (color, text = "start") => {
 simon.drawAll= function drawAll(){
     
     this.createCanvas(simon.myCanvas, simon.canvasWidth, simon.canvasHeight)
+    this.ctx.clearRect(0,0,simon.canvasWidth, simon.canvasHeight)
     this.ctx.imageSmoothingEnabled=false;
+    
     let bigRadius = null;
     let smallRadius = null;
     let innerCirle = null;
@@ -120,12 +127,18 @@ simon.drawAll= function drawAll(){
     
     this.ctx.beginPath();
     this.circle.draw();
+    
     this.blueButton.draw();
     this.redButton.draw();
     this.greenButton.draw();
     this.yellowButton.draw();
+
+
+    
     this.smallCircle.draw();
     this.canvasText("green");
+        
+
 }
 
 

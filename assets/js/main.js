@@ -26,7 +26,7 @@ $(document).ready(function(){
     $("#game").click(function(){
         $("#main-page").slideUp(200);
         simon.drawAll()
-        simon.animateDpiCanvas();
+
         $("#game-wrap").fadeIn(500);
 
         setTimeout(() => {
@@ -39,7 +39,7 @@ $(document).ready(function(){
                     item.setColor();
                 })
 
-            },2500)
+            },3500)
         },501)
 
     });
@@ -51,7 +51,7 @@ $(document).ready(function(){
 
     $("#quit-game").click(function() {
         $("#game-wrap").fadeOut(200);
-        cancelAnimationFrame(simon.canvasDpiID);
+       
         $("#main-page").slideDown(200);
     })
 

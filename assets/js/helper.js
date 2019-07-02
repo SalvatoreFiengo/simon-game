@@ -65,13 +65,13 @@ function showHighlightedButtons(arr, speed){
         
         next.clicked = true;
         next.setColor();
+
     }else{
         index = 0;
         return
     }
     index++
-    
-    setTimeout(()=>showHighlightedButtons(arr, speed), speed);
+    setTimeout(()=>showHighlightedButtons(arr, speed), speed+index);
 } 
 
 
@@ -110,20 +110,24 @@ function simonTurn (){
 function playerChosenButton(move){
         
         $("canvas").unbind("click").click(function(){
-       
-        simon.buttonBaseArr.forEach((item) => {
-            move=canvasButtonIsClicked(item,event);
-            console.log(move)
-            if (move){
-                simon.playerCoiches.push(move);
-                console.log(simon.playerCoiches)
-                    if(simon.playerCoiches.length>0){
-                        checkchoice(choice,simon.playerCoiches);
+        if(canvasButtonIsClicked(simon.smallCircle,event)){ 
+            return
+        }
+        else{
+            simon.buttonBaseArr.forEach((item) => {
+                move=canvasButtonIsClicked(item,event);
+                console.log(move)
+                if (move){
+                    simon.playerCoiches.push(move);
+                    console.log(simon.playerCoiches)
+                        if(simon.playerCoiches.length>0){
+                            checkchoice(choice,simon.playerCoiches);
+                        }
                     }
-                }
-            })
-
+                })
+            }
         })
+        
         let choice = setInterval(()=>playerChosenButton(move), 2000)
         console.log("dopo "+simon.playerCoiches)
         setTimeout(clearInterval(choice), 1)
@@ -145,7 +149,10 @@ function checkchoice(choice, playerChoices){
             console.log("simon "+simonChoices)
             
             simon.playerCoiches = [];
-            simonTurn();
+            setTimeout(() => {
+                
+                simonTurn();
+            }, simon.speed); 
             
             
         }

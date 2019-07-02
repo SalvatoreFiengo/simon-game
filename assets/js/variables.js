@@ -3,7 +3,7 @@ var dpi = window.devicePixelRatio;
 var simon ={};
 
 simon.currentLevel = 0;
-simon.speed = 500;
+simon.speed = 800;
 simon.ctx = null;
 simon.myCanvas = document.getElementById("canvas");
 
@@ -17,7 +17,6 @@ simon.smallRadius = simon.canvasWidth /2.75;
 simon.innerCirle = simon.canvasWidth /5;
 
 simon.path;
-simon.canvasDpiID;
 
 simon.buttonBaseArr = [];
 simon.playerCoiches = [];

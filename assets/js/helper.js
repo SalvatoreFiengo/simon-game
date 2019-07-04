@@ -85,7 +85,7 @@ function getRandomButton() {
 // simon will choose 1 random color and push it to simon.level  
 let count = 0
 function simonTurn (){
-    console.log("Simon Turn")
+
     let buttons = simon.buttonBaseArr;
     index=0;
  
@@ -98,8 +98,14 @@ function simonTurn (){
         
         let percentage = count*20;
         console.log("percentage " +percentage)
-        updateProgressBar(percentage); 
-  
+        if(count < 5){
+            updateProgressBar(percentage); 
+        }else{
+            percentage = 0;
+            simon.currentLevel++ 
+            updateProgressBar(percentage);
+            $("#lvl").text(simon.currentLevel)
+        }
         playerChoice();
         count++
     }
@@ -108,29 +114,35 @@ function simonTurn (){
 // check if the pressed canvas path (simon button) is defined
 // if it is push it to playerChoices array
 function playerChosenButton(move){
+        simon.isSimonTurn = false;
+        simon.isPlayerTurn = true;
         
         $("canvas").unbind("click").click(function(){
-        if(canvasButtonIsClicked(simon.smallCircle,event)){ 
-            return
-        }
-        else{
-            simon.buttonBaseArr.forEach((item) => {
-                move=canvasButtonIsClicked(item,event);
-                console.log(move)
-                if (move){
-                    simon.playerCoiches.push(move);
-                    console.log(simon.playerCoiches)
-                        if(simon.playerCoiches.length>0){
-                            checkchoice(choice,simon.playerCoiches);
+            if(canvasButtonIsClicked(simon.smallCircle,event)){ 
+                simon.smallCircle.draw();
+                simon.canvasText("green");
+                return
+            }
+            else{
+                for(k=0; k<simon.buttonBaseArr.length;k++){
+                    let item = simon.buttonBaseArr[k];
+                    move=canvasButtonIsClicked(item,event);
+                    console.log(move)
+                    if (move){
+                        simon.playerCoiches.push(move);
+                        console.log(simon.playerCoiches)
+                            if(simon.playerCoiches.length>0){
+                                checkchoice(choice,simon.playerCoiches);
+                                return
+                            }
                         }
                     }
-                })
-            }
+                }
         })
         
         let choice = setInterval(()=>playerChosenButton(move), 2000)
         console.log("dopo "+simon.playerCoiches)
-        setTimeout(clearInterval(choice), 1)
+        clearInterval(choice);
       
 }
 
@@ -139,22 +151,18 @@ function checkchoice(choice, playerChoices){
     let simonChoices= simon.level.map((item)=>item.kind);
 
     console.log("playerChoices "+playerChoices+" length "+playerChoices.length)
-    let playerLen = playerChoices.length;
+    playerChoices.length;
     
     for(i=0; i<playerChoices.length; i++){
     
         if(playerChoices[i] == simonChoices[i] 
-            && i==playerChoices.length-1 && i == simonChoices.length-1){
-            console.log("Hurra! playerChoice "+playerChoices[i]+ " is equal to"+simonChoices[playerLen-1])
-            console.log("simon "+simonChoices)
+            && i==playerChoices.length-1 
+            && i == simonChoices.length-1){
             
             simon.playerCoiches = [];
             setTimeout(() => {
-                
                 simonTurn();
-            }, simon.speed); 
-            
-            
+            }, simon.speed);    
         }
         else if(playerChoices[i] == simonChoices[i] 
              && i==playerChoices.length-1 && i < simonChoices.length-1){
@@ -165,8 +173,13 @@ function checkchoice(choice, playerChoices){
         else if(playerChoices[i] != simonChoices[i] && playerChoices.length>0){
             console.log("player exit"+playerChoices+" length "+playerChoices.length)
             console.log("simon "+simonChoices)
+            simon.isSimonTurn = false;
+            simon.isPlayerTurn = false;
             simon.playerCoiches = [];
-            alert("WRONG MOVE!");
+            
+            setTimeout(() => {
+                console.log("nooooooooo!") 
+            }, 1); 
             return
         }
     }
@@ -187,9 +200,9 @@ function updateProgressBar(percentage){
 }
 
 function simonGame (){
-
+    simon.isSimonTurn = false;
+    simon.isPlayerTurn = false;
     simon.level = [];
-    simon.gameChosenButtons = [];
     simonTurn();
     console.log("out " )
      

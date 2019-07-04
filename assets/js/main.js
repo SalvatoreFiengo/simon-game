@@ -1,4 +1,4 @@
-$(document).ready(function(){
+(function(){$(document).ready(function(){
     
     // resize section based on footer height
 
@@ -30,7 +30,16 @@ $(document).ready(function(){
         $("#game-wrap").fadeIn(500);
 
         setTimeout(() => {
-            
+            $("#canvas").unbind("click").click(function(){
+                if(canvasButtonIsClicked(simon.smallCircle, event)){
+                    simon.smallCircle.draw();
+                    simon.canvasText("red", "Intro");
+                }
+            })
+
+            $("#quit-game").unbind("click").click(()=>{});
+            $("#play-game").unbind("click").click(()=>{});
+
             showHighlightedButtons(simon.buttonBaseArr, simon.speed)
             setTimeout(function(){
                 
@@ -38,22 +47,27 @@ $(document).ready(function(){
                     item.clicked = true;
                     item.setColor();
                 })
-
+                $("#quit-game").click(function() {
+                    $("#game-wrap").fadeOut(200);
+                   
+                    $("#main-page").slideDown(200);
+                })
+                $("#play-game").unbind("click").click(function(){
+                    $("#game-paused").modal("hide");
+                    simonGame(); 
+                    
+                })
+                $("#canvas").unbind("click").click(function(){
+                    $("#game-paused").modal("show");
+                })
             },3500)
         },501)
 
+
     });
 
-    $("#play-game").off().click(function() {
-        simonGame();
-        // simon.buttonArr.forEach((item) => canvasButtonIsClicked(item, event));
-    })
 
-    $("#quit-game").click(function() {
-        $("#game-wrap").fadeOut(200);
-       
-        $("#main-page").slideDown(200);
-    })
+
 
     // footer menu: when clicked will close other menus
     $("footer ul>li:first-child").click(function(){
@@ -65,4 +79,4 @@ $(document).ready(function(){
             $("ul:not(#"+id+") >li:first-child").siblings().hide();
         }
     })
-});
+});})(jQuery)

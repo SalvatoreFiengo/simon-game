@@ -59,17 +59,44 @@ simon.drawObj = class CanvasObj{
             this.fill? simon.ctx.fill(this.path): simon.ctx.stroke(this.path);
             
             simon.smallCircle.draw();
-            simon.canvasText("green");
+            if(simon.isSimonTurn){ 
+                simon.canvasText("red","Simon Turn");
+            }else if(simon.isPlayerTurn){
+                
+                simon.canvasText("blue","Player Turn");
+            }else{
+                simon.canvasText("green");
+            }
             
             setTimeout(()=>{
-                simon.ctx.fillStyle = this.color;
-                this.fill? simon.ctx.fill(this.path): simon.ctx.stroke(this.path);
-                this.clicked = false; 
+                let soundPromise = simon.audio[this.kind].play();
                 
-                simon.smallCircle.draw();
-                simon.canvasText("green");  
-                           
-            }, 400);
+                if(soundPromise !== undefined){
+                    soundPromise.then(_ =>{
+                        return
+                    }).catch(error =>{
+                        console.log(error)
+                    }); 
+                }
+                setTimeout(()=>{
+                    simon.ctx.fillStyle = this.color;
+                    this.fill? simon.ctx.fill(this.path): simon.ctx.stroke(this.path);
+                    this.clicked = false; 
+                    simon.smallCircle.draw();
+    
+                    if(simon.isSimonTurn){ 
+                        simon.canvasText("red","Simon Turn");
+                    }else if(simon.isPlayerTurn){
+                        
+                        simon.canvasText("blue","Player Turn");
+                    }else{
+                        simon.canvasText("green");
+                    }
+                    
+                 
+                }, 400);
+            },1)
+            
  
         }
 

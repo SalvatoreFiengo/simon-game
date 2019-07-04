@@ -168,6 +168,14 @@ td.canvas-cell {
     width: 42%;
     cursor: pointer;
 }
+#quit-game {
+    cursor: pointer;
+}
+
+#play-game {
+    cursor: pointer;
+}
+
 .progress-wrap {
     width: 70%;
     min-height: 10vh; 

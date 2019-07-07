@@ -36,56 +36,80 @@
             <table id="game-table" class="table">
                 <thead>
                     <tr>
-                        <th colspan="4">
-                            <div class="row game-cockpit">
-                                <div id="quit-game" class="col-xs-4 text-center">Back to home</div>
-                                <div id="scoreboard" class="col-xs-4 text-center">Scoreboard</div>
-                                <div class="col-xs-4 text-center">Level :<span id="lvl" class="badge">1</span></div>
-                            </div>
+                        <th class="text-center">
+                            <p id="quit-game">Home</p>
                         </th> 
+                        <th class="text-center">
+                            <p id="scoreboard">Scoreboard</p>
+                        </th>
+                        <th class="text-center">
+                            <p>Level :<span id="lvl" class="badge">1</span></p>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="canvas-cell text-center" colspan="4">
+                        <td class="canvas-cell text-center" colspan="3">
                             <canvas id="canvas"></canvas>
-                        </td>
-                        <td>
                             <div id="game-paused" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
-                                   <div class="modal-content">
-                                     <div class="modal-header">
-                                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
-                                       <h4 class="modal-title" id="myModalLabel">New Game?</h4>
-                                     </div>
-                                     <div class="modal-body">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                                            <h4 class="modal-title" id="myModalLabel">Fancy a Game?</h4>
+                                        </div>
                                         <form action="#" method="GET">
-                                            <div class="form-group">
-                                              <label for="name">Name</label>
-                                              <input type="text" class="form-control" id="name" required aria-required="true">
+                                            <div id="new-game-modal" class="modal-body">
+                                                
+                                                <div class="form-group">
+                                                    <label for="name">Name</label>
+                                                    <input type="text" class="form-control" id="name" aria-required="true">
+                                                </div>
+                                                
                                             </div>
-                                            <div class="checkbox">
-                                              <label><input type="checkbox">Remember me</label>
+                                            <div id="saved-games-modal" class="modal-body">
+                                                <div class="form-group">
+                                                    <legend for="saved-games">Saved Games</legend>
+                                                    <table id="saved-games" class="table table-condensed table-hover">
+                                                            <thead>
+                                                            </thead>
+                                                            <tbody>
+                                                            </tbody>
+                                                            <tfoot>
+                                                            </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                <button id="back-to-new-game" type="button" class="btn btn-success">New Game?</button>
+                                                <button id="play-game" type="submit" class="btn btn-success">Play</button>
+                                                <button id="load-game" type="button" class="btn btn-success">Load Game</button>
                                             </div>
                                         </form>
-                                     </div>
-                                     <div class="modal-footer">
-                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                       <button id="play-game" type="button" class="btn btn-success">Play</button>
-                                     </div>
-                                   </div>
-                                 </div>
-                               </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td id="scoreboard-cell" colspan="3">
+                            <table id="scoreboard-table" class="table-condensed table-bordered text-center custom-scrollbar">
+                                <thead>
+
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
                         </td>
                     </tr>
                 </tbody>
-                <tfoot>
+                <tfoot id="footer-progress-bar">
                     <tr>
                         <td colspan="4">
                             <div class="progress-wrap center-block text-center">
                                 <label class="green" for="next-lvl-bar">to next level</label>
                                 <div class="progress">
-                                    <div id="next-lvl-bar" class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
+                                    <div id="next-lvl-bar" class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
                                         <span class="sr-only">60% Complete</span>
                                     </div>
                                 </div>
@@ -175,6 +199,7 @@
     </footer>  
     
     <script src="assets/js/variables.js"></script>
+    <script src="assets/js/players.js"></script>
     <script src="assets/js/helper.js"></script>
     <script src="assets/js/canvas.js"></script>
     <script src="./assets/js/paragraphs.js"></script>

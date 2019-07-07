@@ -8,13 +8,11 @@ simon.ctx = null;
 simon.myCanvas = document.getElementById("canvas");
 
 simon.ratio = 0.8;
-simon.canvasWidth = window.innerWidth ; 
-simon.canvasHeight = simon.canvasWidth * simon.ratio;
-simon.centerX = simon.canvasWidth /2;
-simon.centerY = simon.canvasHeight /2;
-simon.bigRadius = simon.canvasWidth /2.5;
-simon.smallRadius = simon.canvasWidth /2.75;
-simon.innerCirle = simon.canvasWidth /5;
+simon.centerX;
+simon.centerY;
+simon.bigRadius;
+simon.smallRadius;
+simon.innerCirle;
 
 simon.path;
 
@@ -23,7 +21,7 @@ simon.isSimonTurn = false;
 simon.isPlayerTurn = false;
 simon.buttonBaseArr = [];
 simon.playerCoiches = [];
-simon.gameChosenButtons = []
+
 simon.level = [];
 simon.audio = {
     "Red": new Audio("./assets/sounds/Red.mp3"),
@@ -32,3 +30,5 @@ simon.audio = {
     "Green": new Audio("./assets/sounds/Green.mp3")
 };
 
+simon.newGame = [];
+simon.currentSavedGames=[];

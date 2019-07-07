@@ -152,8 +152,21 @@ body {
 }
 
 #game-table{
-    height: 100%
+    height: 100%;
 }
+
+#game-table thead tr th {
+    width: 33%;
+}
+
+#game-table p, #scoreboard-table p{
+    color: rgb(212, 211, 211);
+}
+
+#saved-games p {
+    color: black;
+}
+
 table tr {
     font-size: 20px;
 }
@@ -164,8 +177,7 @@ td.canvas-cell {
 
 #canvas {
     display: inline;
-    background-color: transparent;
-    width: 42%;
+    background-color: white;
     cursor: pointer;
 }
 #quit-game {
@@ -174,6 +186,16 @@ td.canvas-cell {
 
 #play-game {
     cursor: pointer;
+}
+
+#save-games-modal{
+    display: none;
+}
+
+#scoreboard-table{
+    width: 100%;
+    margin-left:auto; 
+    margin-right:auto;
 }
 
 .progress-wrap {
@@ -221,6 +243,7 @@ footer .icon-set {
 
     #canvas{
         width: 100%;
+        
     }
     
     footer .list-group {

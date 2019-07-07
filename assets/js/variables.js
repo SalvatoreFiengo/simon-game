@@ -2,7 +2,19 @@ var dpi = window.devicePixelRatio;
 //canvas namespace + default setting; 
 var simon ={};
 
-simon.currentLevel = 1;
+simon.player={
+    id : 0,
+    name: [],
+    count: 0,
+    simonLevel : [],
+    currentLevel: 0,
+    count: [],
+    lastRecordedGame: [],
+    numberOfGames:0,
+    score: []
+}
+
+simon.currentLevel = simon.player.currentLevel;
 simon.speed = 800;
 simon.ctx = null;
 simon.myCanvas = document.getElementById("canvas");
@@ -32,3 +44,4 @@ simon.audio = {
 
 simon.newGame = [];
 simon.currentSavedGames=[];
+

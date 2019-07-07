@@ -30,6 +30,8 @@
         $("#scoreboard-cell").hide();
         $("#game-wrap").fadeIn(500);
 
+        $("#lvl").text(simon.player.currentLevel)
+        
         let introTimeOut = setTimeout(() => {
 
             $("#canvas").unbind("click").click(function(){
@@ -45,36 +47,12 @@
             $("#scoreboard").unbind("click").click(()=>{});
 
             showHighlightedButtons(simon.buttonBaseArr, simon.speed)
+            
             let introSecondTimeOut=setTimeout(function(){
-                
-               simon.buttonBaseArr.forEach((item)=>{
+                resetQuitandScoreboardButton(); 
+                simon.buttonBaseArr.forEach((item)=>{
                     item.clicked = true;
                     item.setColor();
-                })
-
-                $("#quit-game").click(function() {
-                    clearTimeout(introSecondTimeOut);
-                    clearTimeout(introTimeOut);
-                    $(".canvas-cell").fadeIn();
-
-                    $("#game-wrap").fadeOut(200);
-                   
-                    $("#main-page").slideDown(200);
-                })
-
-                $("#scoreboard").click(function(){
-                    if(!$("#scoreboard-cell").is(":visible")){
-                        $(".canvas-cell").hide();
-
-                        $("#footer-progress-bar").hide();
-                        
-                        getGamesStat("#scoreboard-table")
-                        
-                        $("#scoreboard-cell").show();
-                    
-                    }else{
-                        $("#scoreboard").unbind("click").click(()=>{});
-                    }
                 })
 
                 $("#play-game").unbind("click").click(function(){
@@ -84,22 +62,20 @@
                     $("#new-game-modal").show();
 
                     simon.currentSavedGames=JSON.parse(storage().getItem("0"));
+
+                    resetPlayer(simon.player);
                     simon.player.name = $("#name:text").val();
                     simon.currentSavedGames != null ? simon.currentSavedGames: simon.currentSavedGames = [];
-                    simon.player.count = 0;
-                    simon.player.score = 0;
-                    simon.player.currentLevel = 1;
-                    simon.player.simonLevel = [];
-                    simon.player.numberOfGames = 0;
                     simon.player.id = simon.currentSavedGames.length;
                     simon.currentSavedGames.push(simon.player);
                     console.log("play "+simon.currentSavedGames)
                     storage().setItem("0",JSON.stringify(simon.currentSavedGames));
-
-                    clearTimeout(simon.game);
-                    simon.game=setTimeout(()=>{simonGame(simon.player);},simon.speed)  
+                    clearInterval(introTimeOut);
+                    clearInterval(introSecondTimeOut);
+                    simonGame(simon.player);
                     
                 })
+
 
                 $("#canvas").unbind("click").click(function(){
 
@@ -158,12 +134,12 @@
                 })
             }
 
-            
+            $("#lvl").text(simon.player.currentLevel)
 
             $("#game-paused").modal("hide");
-            clearTimeout(simon.game);
-            simon.game=setTimeout(()=>{simonGame(simon.player);},simon.speed);
+            simonGame(simon.player);
         })
+
         $("#back-to-new-game").click(function(){
             $("#new-game-modal").show();
             $("#saved-games-modal").hide();

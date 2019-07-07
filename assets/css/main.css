@@ -177,7 +177,7 @@ td.canvas-cell {
 
 #canvas {
     display: inline;
-    background-color: white;
+    background-color: transparent;
     cursor: pointer;
 }
 #quit-game {
@@ -241,10 +241,6 @@ footer .icon-set {
 }
 @media only screen and (max-width: 767px){
 
-    #canvas{
-        width: 100%;
-        
-    }
     
     footer .list-group {
         margin-bottom: 1px

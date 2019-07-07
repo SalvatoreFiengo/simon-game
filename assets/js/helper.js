@@ -115,7 +115,6 @@ function getRandomButton() {
 // eventually add 1 level and start player turn  
 
 function simonTurn (player){
-
     let buttons = simon.buttonBaseArr;
     index=0;
  
@@ -123,8 +122,8 @@ function simonTurn (player){
     simon.level.push(buttons[k]);
     console.log("loaded and in simon turn: "+simon.level)
     showHighlightedButtons(simon.level, simon.speed)
-
-    if(simon.currentLevel<=20){
+    
+    if(simon.player.currentLevel<=20){
         
         let percentage = player.count*20;
         
@@ -132,9 +131,9 @@ function simonTurn (player){
             updateProgressBar(percentage); 
         }else{
             percentage = 0;
-            simon.currentLevel++ 
+            simon.player.currentLevel++ 
             updateProgressBar(percentage);
-            $("#lvl").text(simon.currentLevel)
+            $("#lvl").text(simon.player.currentLevel)
             player.count = 0;
         }
         playerChoice(player);
@@ -175,7 +174,9 @@ function playerChosenButton(move, player){
                 }
         })
         
-        let choice = setInterval(()=>playerChosenButton(move), 2000)
+        let choice = setInterval(()=>{
+            playerChosenButton(move)
+        }, 2000)
         
         clearInterval(choice);
       
@@ -212,6 +213,8 @@ function checkchoice(choice, playerChoices,player,count){
             setTimeout(() => {
                 alert("Game Over");
                 updateSavedGame(count, player);
+                resetQuitandScoreboardButton();
+                updateProgressBar(100);
                 simon.level = [];
                 $("#canvas").unbind("click").click(function(){
                     if(canvasButtonIsClicked(simon.smallCircle,event)){ 
@@ -240,14 +243,60 @@ function updateProgressBar(percentage){
     $("#next-lvl-bar span").text(percentage + "% Complete")
 }
 
-function simonGame (player){
+function simonGame(player){
+
+    clearTimeout(simon.game);
+    $("#quit-game").unbind("click").click(()=>{});
+    $("#scoreboard").unbind("click").click(()=>{});
+    simon.game=setTimeout(()=>{
+
+        setTimeout(()=>{
+            simonTurn(player);
+            resetPlayer(simon.player);
+        },simon.speed)
+        
+    },simon.speed+5) 
     simon.isSimonTurn = false;
     simon.isPlayerTurn = false;
-    simonTurn(player);
-    
-     
 }
 // scoreboard and load game
+
+function resetQuitandScoreboardButton(){
+    
+    $("#quit-game").click(function() {
+
+        resetPlayer(simon.player);
+        simon.level = [];
+        updateProgressBar(100);
+        $(".canvas-cell").fadeIn();
+
+        $("#game-wrap").fadeOut(200);
+       
+        $("#main-page").slideDown(200);
+    })
+
+    $("#scoreboard").click(function(){
+        if(!$("#scoreboard-cell").is(":visible")){
+            $(".canvas-cell").hide();
+
+            $("#footer-progress-bar").hide();
+            
+            getGamesStat("#scoreboard-table")
+            
+            $("#scoreboard-cell").show();
+        
+        }else{
+            $("#scoreboard").unbind("click").click(()=>{});
+        }
+    })
+}
+function resetPlayer(player){
+    player.count = 0;
+    player.score = 0;
+    player.currentLevel = 0;
+    player.simonLevel = [];
+    player.numberOfGames = 0;
+}
 
 function getGamesStat(selectedTable){
     simon.currentSavedGames = JSON.parse(storage().getItem("0"));

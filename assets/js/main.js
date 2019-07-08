@@ -21,35 +21,61 @@
         $(this).text("Rules");
     })
 
-
+    // when click on game switch sections and show game section with canvas 
+    // update current player game level
+    // sets up canvas to handle the start/load status of the game 
+    // sets scoreboard table buttons behaviour
+    // sets game table buttons behaviours
 
     $("#game").click(function(){
         $("#main-page").slideUp(200);
+
+        //draw canvas --canvas.js
+
         simon.drawAll()
 
-        $("#scoreboard-cell").hide();
+        $("#back-to-canvas, #scoreboard-cell").hide();
+        
+        $("#quit-game, #play-game, #scoreboard, .level").hide();
+
         $("#game-wrap").fadeIn(500);
 
+        // presetting the level badge to player game level
+
         $("#lvl").text(simon.player.currentLevel)
-        
+
         let introTimeOut = setTimeout(() => {
 
             $("#canvas").unbind("click").click(function(){
-                if(canvasButtonIsClicked(simon.smallCircle, event)){
-                    simon.smallCircle.draw();
-                    simon.canvasText("red", "Intro");
+
+                // function to check if the central circle is clicked if it is write intro in red
+
+                if(canvasElementIsClicked(simon.smallCircle, event)){
+
                 }
 
             })
-
-            $("#quit-game").unbind("click").click(()=>{});
-            $("#play-game").unbind("click").click(()=>{});
-            $("#scoreboard").unbind("click").click(()=>{});
-
+            
+            //recursive function, call itself every "game speed time" 
+            //takes an array of canvas simon button objects and makes them blink at games speed --helper.js
+            simon.intro = true;
+            simon.smallCircle.draw();
+            simon.canvasText("red", "Intro");
             showHighlightedButtons(simon.buttonBaseArr, simon.speed)
             
             let introSecondTimeOut=setTimeout(function(){
-                resetQuitandScoreboardButton(); 
+
+                $("#quit-game, #play-game, #scoreboard, .level").fadeIn();
+
+                //funciton to set event handlers for quit and scoreboard button --helper.js
+
+                setQuitandScoreboardButton(); 
+
+                simon.smallCircle.draw();
+                simon.canvasText("green", "Start");
+                simon.intro = false;
+                // to make all buttons blink togheter
+
                 simon.buttonBaseArr.forEach((item)=>{
                     item.clicked = true;
                     item.setColor();
@@ -60,18 +86,17 @@
                     $("#saved-games-modal").hide();
                     $("#game-paused").modal("hide");
                     $("#new-game-modal").show();
-
-                    simon.currentSavedGames=JSON.parse(storage().getItem("0"));
-
+                
+                    // resets "simon.player" --variables.js 
                     resetPlayer(simon.player);
-                    simon.player.name = $("#name:text").val();
-                    simon.currentSavedGames != null ? simon.currentSavedGames: simon.currentSavedGames = [];
-                    simon.player.id = simon.currentSavedGames.length;
-                    simon.currentSavedGames.push(simon.player);
-                    console.log("play "+simon.currentSavedGames)
+                    // gets a new player setting the basic stat and pushes it in simon.currentSavedGames array--helper.js
+                    getNewPlayer();
+                    // then set in the local storage --helpers.js
                     storage().setItem("0",JSON.stringify(simon.currentSavedGames));
+
                     clearInterval(introTimeOut);
                     clearInterval(introSecondTimeOut);
+                    //starts the game --helpers.js
                     simonGame(simon.player);
                     
                 })
@@ -80,17 +105,16 @@
                 $("#canvas").unbind("click").click(function(){
 
                     $("#game-paused").modal("show");
-                    $("#new-game-modal").show();
-                    $("#play-game").show();
-                    $("#back-to-new-game").hide();
-                    $("#saved-games-modal").hide();
+                    $("#new-game-modal, #play-game").show();
+                    $("#back-to-new-game, #saved-games-modal").hide();
                 })
 
                 $(document).on("click","#back-to-canvas",(function(){     
                     
-                    $("#scoreboard-cell").hide();
-                    $(".canvas-cell").fadeIn();
-                    $("#footer-progress-bar").fadeIn()
+                    $("#back-to-canvas, #scoreboard-cell").hide();
+                    $("#quit-game").show();
+                    $(".canvas-cell, #footer-progress-bar").fadeIn();
+
                 }))
 
             },3500)
@@ -102,49 +126,19 @@
 
     $("#load-game").unbind("click").click(function(){
 
-        $("#new-game-modal").hide();
-        $("#play-game").hide();
-        $("#back-to-new-game").show();
-        $("#saved-games-modal").show();
-        
+        $("#new-game-modal, #play-game").hide();
+
+        $("#back-to-new-game, #saved-games-modal").show();        
         
         getGamesStat("#saved-games")
 
-        $("#saved-games tbody tr").click(function(){
-            let id=$(this).attr("id");
-            console.log("loaded :"+simon.currentSavedGames[id].name+" id "+simon.currentSavedGames[id].id)
-            let simonSavedMoves=[];
-
-            simon.player.id = simon.currentSavedGames[id].id;
-            simon.player.name = simon.currentSavedGames[id].name;
-            simon.player.count = simon.currentSavedGames[id].count;
-            simon.player.score = simon.currentSavedGames[id].score;
-            simon.player.currentLevel = simon.currentSavedGames[id].currentLevel;
-            simon.player.numberOfGames++;
-
-
-            if(simon.level.length < simon.currentSavedGames[id].simonLevel.length){
-                simonSavedMoves=[...simon.currentSavedGames[id].simonLevel];
-                simonSavedMoves.forEach((button)=>{
-                    for(i=0; i<simon.buttonBaseArr.length; i++){
-                        if(button.kind == simon.buttonBaseArr[i].kind){
-                            simon.level.push(simon.buttonBaseArr[i]);
-                        }
-                    }
-                })
-            }
-
-            $("#lvl").text(simon.player.currentLevel)
-
-            $("#game-paused").modal("hide");
-            simonGame(simon.player);
-        })
+        loadPlayer();
 
         $("#back-to-new-game").click(function(){
-            $("#new-game-modal").show();
-            $("#saved-games-modal").hide();
-            $("#play-game").show();
-            $("#back-to-new-game").hide();
+
+            $("#new-game-modal, #play-game").show();
+            $("#saved-games-modal, #back-to-new-game").hide();
+
         })
     })
 
@@ -158,4 +152,5 @@
             $("ul:not(#"+id+") >li:first-child").siblings().hide();
         }
     })
+
 });})(jQuery)

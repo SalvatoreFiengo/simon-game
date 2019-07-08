@@ -67,13 +67,14 @@ simon.drawObj = class CanvasObj{
             this.fill? simon.ctx.fill(this.path): simon.ctx.stroke(this.path);
             
             simon.smallCircle.draw();
-            if(simon.isSimonTurn){ 
-                simon.canvasText("red","Simon Turn");
+            
+            if(simon.intro){ 
+                simon.canvasText("red","Intro");
             }else if(simon.isPlayerTurn){
                 
                 simon.canvasText("blue",simon.player.name);
             }else{
-                simon.canvasText("green");
+                simon.canvasText("green", "Start");
             }
             
             setTimeout(()=>{
@@ -92,13 +93,13 @@ simon.drawObj = class CanvasObj{
                     this.clicked = false; 
                     simon.smallCircle.draw();
     
-                    if(simon.isSimonTurn){ 
-                        simon.canvasText("red","Simon Turn");
+                    if(simon.intro){ 
+                        simon.canvasText("red");
                     }else if(simon.isPlayerTurn){
                         
                         simon.canvasText("blue",simon.player.name);
                     }else{
-                        simon.canvasText("green");
+                        simon.canvasText("green", "Start");
                     }
                     
                  
@@ -121,7 +122,7 @@ simon.drawObj = class CanvasObj{
 
 }
 
-simon.canvasText = (color, text = "start") => {
+simon.canvasText = (color, text = "Intro") => {
     simon.startCircle.draw();
     simon.ctx.moveTo(simon.centerX, simon.centerY)
     var startGame = new Path2D();
@@ -167,7 +168,7 @@ simon.drawAll= function drawAll(){
 
     
     this.smallCircle.draw()
-    this.canvasText("green");
+    this.canvasText("red, Intro");
         
 
 }

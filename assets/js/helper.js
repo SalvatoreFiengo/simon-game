@@ -12,6 +12,8 @@ function getMousePos(canvas,event){
     };
 }
 
+//Local storage CRUD
+
 function storage (){
     if (window.localStorage){
         return {
@@ -39,7 +41,7 @@ function storage (){
 
 // change color on canvas click;
 
-function canvasButtonIsClicked(item, event){
+function canvasElementIsClicked(item, event){
     var pos = getMousePos(simon.myCanvas, event);
 
     if(simon.ctx.isPointInPath(item.path, pos.x, pos.y)){
@@ -52,8 +54,6 @@ function canvasButtonIsClicked(item, event){
     }
 
 }
-
-// iterate simon.buttonsArr every 400 ms to change color programmatically
 
 
 var index = 0;
@@ -77,6 +77,55 @@ function showHighlightedButtons(arr, speed){
 
 
 // game basic logic
+
+//get current saved games from Storage
+//set new Player with id = array in storage lenght
+//push new Player to array
+
+function getNewPlayer(){
+    simon.currentSavedGames=JSON.parse(storage().getItem("0"));             
+    simon.player.name = $("#name:text").val();
+    simon.currentSavedGames != null ? simon.currentSavedGames: simon.currentSavedGames = [];
+    simon.player.id = simon.currentSavedGames.length;
+    simon.currentSavedGames.push(simon.player);
+}
+
+//Load player from Storage by clicking on a table in the "load game modal"
+
+function loadPlayer(){
+    $("#saved-games tbody tr").click(function(){
+        let id=$(this).attr("id");
+                
+        let simonSavedMoves=[];
+
+        simon.player.id = simon.currentSavedGames[id].id;
+        simon.player.name = simon.currentSavedGames[id].name;
+        simon.player.count = simon.currentSavedGames[id].count;
+        simon.player.score = simon.currentSavedGames[id].score;
+        simon.player.currentLevel = simon.currentSavedGames[id].currentLevel;
+        simon.player.numberOfGames++;
+
+
+        if(simon.level.length < simon.currentSavedGames[id].simonLevel.length){
+            simonSavedMoves=[...simon.currentSavedGames[id].simonLevel];
+            simonSavedMoves.forEach((button)=>{
+                for(i=0; i<simon.buttonBaseArr.length; i++){
+                    if(button.kind == simon.buttonBaseArr[i].kind){
+                        simon.level.push(simon.buttonBaseArr[i]);
+                    }
+                }
+            })
+        }
+
+        $("#lvl").text(simon.player.currentLevel)
+        $("#game-paused").modal("hide");
+
+        simonGame(simon.player);
+    })
+}
+
+//Updates Player stat every game cycle 
+
 function updateSavedGame(count, player){
 
     if(player.name == ""){
@@ -100,7 +149,7 @@ function updateSavedGame(count, player){
     player.score = (simon.currentLevel*10) + count - (player.numberOfGames*2);
      
     simon.currentSavedGames[player.id]=player;
-    console.log("updating "+simon.currentSavedGames[player.id].name+" id: "+simon.currentSavedGames[player.id].id);
+
     storage().setItem(0,JSON.stringify(simon.currentSavedGames));
     
 }
@@ -109,18 +158,27 @@ function getRandomButton() {
     return Math.floor((Math.random()*3)+1);
     
 }
+
+// during simon turn all table buttons are disabled
 // simon will choose 1 random color and push it to simon.level
 // will turn on those buttons
 // then based on how many times runs will update progress bar up to 5 times 
-// eventually add 1 level and start player turn  
+// eventually add 1 level and start player turn 
+// at lvl 20 Player wins 
 
 function simonTurn (player){
+    $("#quit-game, #scoreboard").unbind("click").click(()=>{});
+    
+    if(!simon.isPlayerTurn){
+        simon.isPlayerTurn = true;
+        }
+
     let buttons = simon.buttonBaseArr;
     index=0;
  
     k= getRandomButton();
     simon.level.push(buttons[k]);
-    console.log("loaded and in simon turn: "+simon.level)
+
     showHighlightedButtons(simon.level, simon.speed)
     
     if(simon.player.currentLevel<=20){
@@ -148,19 +206,17 @@ function simonTurn (player){
 
 // ??
 function playerChosenButton(move, player){
-        simon.isSimonTurn = false;
-        simon.isPlayerTurn = true;
-        
+
         $("canvas").unbind("click").click(function(){
-            if(canvasButtonIsClicked(simon.smallCircle,event)){ 
+            if(canvasElementIsClicked(simon.smallCircle,event)){ 
                 simon.smallCircle.draw();
-                simon.canvasText("green");
+                simon.canvasText("Yellow", "Your move");
                 return
             }
             else{
                 for(k=0; k<simon.buttonBaseArr.length;k++){
                     let item = simon.buttonBaseArr[k];
-                    move=canvasButtonIsClicked(item,event);
+                    move=canvasElementIsClicked(item,event);
                     
                     if (move){
                         simon.playerCoiches.push(move);
@@ -183,7 +239,10 @@ function playerChosenButton(move, player){
 }
 
 function checkchoice(choice, playerChoices,player,count){
+
+    setQuitandScoreboardButton();
     clearInterval(choice)
+
     let simonChoices= simon.level.map((item)=>item.kind);
     
     for(i=0; i<playerChoices.length; i++){
@@ -199,31 +258,35 @@ function checkchoice(choice, playerChoices,player,count){
             }, simon.speed);    
         }
         else if(playerChoices[i] == simonChoices[i] 
-             && i==playerChoices.length-1 && i < simonChoices.length-1){
-           
+            && i==playerChoices.length-1 && i < simonChoices.length-1){
             
             playerChoice(player);
         }
         else if(playerChoices[i] != simonChoices[i] && playerChoices.length>0){
-           
-            simon.isSimonTurn = false;
-            simon.isPlayerTurn = false;
+
             simon.playerCoiches = [];
             
             setTimeout(() => {
+
                 alert("Game Over");
                 updateSavedGame(count, player);
-                resetQuitandScoreboardButton();
+                setQuitandScoreboardButton();
                 updateProgressBar(100);
+
                 simon.level = [];
+
+                simon.smallCircle.draw()
+                simon.canvasText("green", "Start")
+
                 $("#canvas").unbind("click").click(function(){
-                    if(canvasButtonIsClicked(simon.smallCircle,event)){ 
+                    if(canvasElementIsClicked(simon.smallCircle,event)){ 
                         simon.smallCircle.draw();
-                        simon.canvasText("green");
+                        simon.canvasText("green, Start");
                         $("#game-paused").modal("show");
                     }
                 }) 
             }, simon.speed); 
+
             return
         }
     }
@@ -246,8 +309,8 @@ function updateProgressBar(percentage){
 function simonGame(player){
 
     clearTimeout(simon.game);
-    $("#quit-game").unbind("click").click(()=>{});
-    $("#scoreboard").unbind("click").click(()=>{});
+    $("#quit-game, #scoreboard").unbind("click").click(()=>{});
+
     simon.game=setTimeout(()=>{
 
         setTimeout(()=>{
@@ -256,12 +319,10 @@ function simonGame(player){
         },simon.speed)
         
     },simon.speed+5) 
-    simon.isSimonTurn = false;
-    simon.isPlayerTurn = false;
 }
 // scoreboard and load game
 
-function resetQuitandScoreboardButton(){
+function setQuitandScoreboardButton(){
     
     $("#quit-game").click(function() {
 
@@ -277,9 +338,8 @@ function resetQuitandScoreboardButton(){
 
     $("#scoreboard").click(function(){
         if(!$("#scoreboard-cell").is(":visible")){
-            $(".canvas-cell").hide();
-
-            $("#footer-progress-bar").hide();
+           
+            $(".canvas-cell, #footer-progress-bar").hide();
             
             getGamesStat("#scoreboard-table")
             
@@ -290,6 +350,7 @@ function resetQuitandScoreboardButton(){
         }
     })
 }
+
 function resetPlayer(player){
     player.count = 0;
     player.score = 0;
@@ -301,13 +362,13 @@ function resetPlayer(player){
 function getGamesStat(selectedTable){
     simon.currentSavedGames = JSON.parse(storage().getItem("0"));
 
-    $(selectedTable+" thead").empty();
-    $(selectedTable+" tbody").empty();
+    $(selectedTable+" thead,"+selectedTable+" tbody").empty();
     
-    $("#scoreboard-table thead")
-        .append("<tr><th class='text-center' colspan=3><a href:'#' id='back-to-canvas'>Back to game</a></th></tr>")
-    
+    $("#back-to-canvas").show();
+    $("#quit-game").hide();
+
     if(simon.currentSavedGames != null && simon.currentSavedGames != undefined && simon.currentSavedGames.length>0){
+        
         $(selectedTable+" thead")
         .append("<tr><th class='text-center'><p>Name</p></th><th class='text-center'><p>Score</p></th><th class='text-center'><p>Last save</p></th></tr>");
 
@@ -325,7 +386,7 @@ function getGamesStat(selectedTable){
 
         for(i=0; i<simon.currentSavedGames.length; i++){
             let player = simon.currentSavedGames[i]
-            console.log(simon.currentSavedGames[i])
+            
             $(selectedTable+" tbody")
                 .append("<tr id="+player.id
                 +"><td class='text-center'><p>"+player.name

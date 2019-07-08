@@ -14,6 +14,7 @@ simon.player={
     score: []
 }
 
+simon.intro = false;
 simon.currentLevel = simon.player.currentLevel;
 simon.speed = 800;
 simon.ctx = null;

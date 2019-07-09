@@ -67,7 +67,7 @@ simon.drawObj = class CanvasObj{
             this.fill? simon.ctx.fill(this.path): simon.ctx.stroke(this.path);
             
             simon.smallCircle.draw();
-            
+
             if(simon.intro){ 
                 simon.canvasText("red","Intro");
             }else if(simon.isPlayerTurn){
@@ -133,12 +133,13 @@ simon.canvasText = (color, text = "Intro") => {
     simon.ctx.stroke(startGame);
     startGame.closePath();
     simon.ctx.moveTo(simon.centerX, simon.centerY);
+    simon.ctx.textAlign = "center";
     simon.ctx.font = "bold 1.5em Baloo Da";
     simon.ctx.fillStyle = "rgb(212, 211, 211)";
-    simon.ctx.fillText("Simon", simon.centerX - 40, simon.centerY -10);
+    simon.ctx.fillText("Simon", simon.centerX , simon.centerY -10);
     simon.ctx.font = "bold 1em Baloo Da";
     simon.ctx.fillStyle = color;
-    simon.ctx.fillText(text, simon.centerX - 20, simon.centerY +30);
+    simon.ctx.fillText(text, simon.centerX, simon.centerY +30);
 }
 
 simon.drawAll= function drawAll(){

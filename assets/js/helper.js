@@ -155,7 +155,7 @@ function updateSavedGame(count, player){
 }
 
 function getRandomButton() {
-    return Math.floor((Math.random()*3)+1);
+    return Math.floor((Math.random()*4));
     
 }
 
@@ -205,6 +205,11 @@ function simonTurn (player){
 
 
 // ??
+function playerChoice(player){   
+    let playerMove;
+    playerChosenButton(playerMove, player);     
+}
+
 function playerChosenButton(move, player){
 
         $("canvas").unbind("click").click(function(){
@@ -222,7 +227,7 @@ function playerChosenButton(move, player){
                         simon.playerCoiches.push(move);
                         
                             if(simon.playerCoiches.length>0){
-                                checkchoice(choice,simon.playerCoiches,player, player.count);
+                                checkchoice(choice,simon.playerCoiches,player);
                                 return
                             }
                         }
@@ -238,7 +243,7 @@ function playerChosenButton(move, player){
       
 }
 
-function checkchoice(choice, playerChoices,player,count){
+function checkchoice(choice, playerChoices,player){
 
     setQuitandScoreboardButton();
     clearInterval(choice)
@@ -252,7 +257,7 @@ function checkchoice(choice, playerChoices,player,count){
             && i == simonChoices.length-1){
             
             simon.playerCoiches = [];
-            updateSavedGame(count, player);
+            updateSavedGame(player.count, player);
             setTimeout(() => {
                 simonTurn(player);
             }, simon.speed);    
@@ -269,7 +274,7 @@ function checkchoice(choice, playerChoices,player,count){
             setTimeout(() => {
 
                 alert("Game Over");
-                updateSavedGame(count, player);
+                updateSavedGame(player.count, player);
                 setQuitandScoreboardButton();
                 updateProgressBar(100);
 
@@ -291,13 +296,6 @@ function checkchoice(choice, playerChoices,player,count){
         }
     }
   
-}
-
-function playerChoice(player){   
-        let playerMove;
-        playerChosenButton(playerMove, player);
-
-         
 }
 
 function updateProgressBar(percentage){

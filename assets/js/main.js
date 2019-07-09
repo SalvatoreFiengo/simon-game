@@ -4,11 +4,10 @@
 
     $(window).on("resize load",function() {
 
-        $("section").css("min-height", $(window).height() - $("footer").height() + "px");
+      $("section").css("min-height", $(window).height() - $("footer").height() + "px");
     }).resize();
 
     // Add text dinamically based on paragraphs.js variables plus change buttons behaviour dinamically;
-    
     $("#paraghraphBoard p").text(description);
 
     $("#switch-home-rules").click(function(){
@@ -31,12 +30,15 @@
         $("#main-page").slideUp(200);
 
         //draw canvas --canvas.js
+        if(window.innerWidth <window.innerHeight){
+            simon.drawAll(250,250);
+        }
+        else{
+            simon.drawAll(300,300);   
+        }
 
-        simon.drawAll()
-
-        $("#back-to-canvas, #scoreboard-cell").hide();
-        
-        $("#quit-game, #play-game, #scoreboard, .level").hide();
+        $(" #play-game, #back-to-canvas, #scoreboard-cell").hide();
+        $("#quit-game,#scoreboard, .level").fadeTo("fast",0);
 
         $("#game-wrap").fadeIn(500);
 
@@ -51,7 +53,7 @@
                 // function to check if the central circle is clicked if it is write intro in red
 
                 if(canvasElementIsClicked(simon.smallCircle, event)){
-
+                    return
                 }
 
             })
@@ -65,7 +67,7 @@
             
             let introSecondTimeOut=setTimeout(function(){
 
-                $("#quit-game, #play-game, #scoreboard, .level").fadeIn();
+                $("#quit-game, #play-game, #scoreboard, .level").fadeTo("slow",1);
 
                 //funciton to set event handlers for quit and scoreboard button --helper.js
 

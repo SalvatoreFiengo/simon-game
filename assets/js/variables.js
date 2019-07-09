@@ -1,5 +1,6 @@
-var dpi = window.devicePixelRatio;
-//canvas namespace + default setting; 
+//canvas namespace 
+// player default settings
+//default setting; 
 var simon ={};
 
 simon.player={

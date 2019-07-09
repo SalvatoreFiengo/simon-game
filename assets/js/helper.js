@@ -1,6 +1,6 @@
 // to get mouse position based on canvas hence with offset
 // added scaleY and scaleY due to canvas not being 1:1 bitmap 
-// --> size has been multiplied with dpi
+
 
 function getMousePos(canvas,event){
     var rect = canvas.getBoundingClientRect();
@@ -13,6 +13,7 @@ function getMousePos(canvas,event){
 }
 
 //Local storage CRUD
+//known issues in Edge/IE as it access "local" and not from server
 
 function storage (){
     if (window.localStorage){
@@ -39,7 +40,7 @@ function storage (){
     }
 }
 
-// change color on canvas click;
+// check if element is clicked and returns its "kind" of type string
 
 function canvasElementIsClicked(item, event){
     var pos = getMousePos(simon.myCanvas, event);
@@ -98,6 +99,7 @@ function loadPlayer(){
                 
         let simonSavedMoves=[];
 
+        //updating game variables with item got from storage
         simon.player.id = simon.currentSavedGames[id].id;
         simon.player.name = simon.currentSavedGames[id].name;
         simon.player.count = simon.currentSavedGames[id].count;
@@ -105,6 +107,9 @@ function loadPlayer(){
         simon.player.currentLevel = simon.currentSavedGames[id].currentLevel;
         simon.player.numberOfGames++;
 
+        //clone array if game "simon moves" are less in lenght of loaded "Simon moves"
+        //then for each button in game "simon moves" cloned array push object button into game "simon moves" array
+        //once got saved game from storage objects will not be able to call methods due to JSON.stringify/parse
 
         if(simon.level.length < simon.currentSavedGames[id].simonLevel.length){
             simonSavedMoves=[...simon.currentSavedGames[id].simonLevel];
@@ -117,9 +122,12 @@ function loadPlayer(){
             })
         }
 
+        //setting game level to loaded player level
+
         $("#lvl").text(simon.player.currentLevel)
         $("#game-paused").modal("hide");
 
+        // starting game
         simonGame(simon.player);
     })
 }
@@ -141,11 +149,14 @@ function updateSavedGame(count, player){
     if(mm<10){mm="0"+mm};
     currentDate = dd+"/"+mm+" "+hr+":"+min
 
+    // get timestamp, updating counter, current level and "simon moves"
     player.lastRecordedGame = currentDate;
     player.count = count;
     player.currentLevel = simon.currentLevel;
     player.simonLevel = simon.level;
     
+    //updating score based on current level "count" and number of times player reloads game
+
     player.score = (simon.currentLevel*10) + count - (player.numberOfGames*2);
      
     simon.currentSavedGames[player.id]=player;
@@ -204,7 +215,10 @@ function simonTurn (player){
 }
 
 
-// ??
+// playerChoiche/playerChosenbutton: when Player clicks the start button gets "Your Move" warning
+// if Player clicks a button this will be pushed in player moves array and checked
+// function will run every 2 secs until check clear it
+
 function playerChoice(player){   
     let playerMove;
     playerChosenButton(playerMove, player);     
@@ -242,6 +256,13 @@ function playerChosenButton(move, player){
         clearInterval(choice);
       
 }
+
+// funciton called in playerChosenButton 
+// sets Quit and Scoreboard button in case Player wants to leave
+// clears the interval: choice from playerChosenButton
+// if player moves are same number of Simon's is simon turn
+// if are less is player turn
+// if move is wrong game over
 
 function checkchoice(choice, playerChoices,player){
 
@@ -297,13 +318,16 @@ function checkchoice(choice, playerChoices,player){
     }
   
 }
-
+// progress bar will be updated in simon turn based on player.count = how many times Player got it right
+// every 5 times it resets to 0 and lvl badge increments of 1
 function updateProgressBar(percentage){
     
     $("#next-lvl-bar").attr("aria-valuenow", percentage+" ").attr("style", "width:"+percentage+"%")
     $("#next-lvl-bar span").text(percentage + "% Complete")
 }
 
+// disables quit and scoreboard "links" before the start of the game
+// sets a time out for the game itself and reset player stats with a small delay
 function simonGame(player){
 
     clearTimeout(simon.game);
@@ -318,7 +342,7 @@ function simonGame(player){
         
     },simon.speed+5) 
 }
-// scoreboard and load game
+// scoreboard and load game as funciton so that can be called again to be set unset
 
 function setQuitandScoreboardButton(){
     
@@ -356,7 +380,7 @@ function resetPlayer(player){
     player.simonLevel = [];
     player.numberOfGames = 0;
 }
-
+// updates game stat in scoreboard
 function getGamesStat(selectedTable){
     simon.currentSavedGames = JSON.parse(storage().getItem("0"));
 

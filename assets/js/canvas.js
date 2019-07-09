@@ -142,9 +142,9 @@ simon.canvasText = (color, text = "Intro") => {
     simon.ctx.fillText(text, simon.centerX, simon.centerY +30);
 }
 
-simon.drawAll= function drawAll(){
+simon.drawAll= function drawAll(canvasWidth=300, canvasHeight=300){
     
-    this.createCanvas(simon.myCanvas, 300, 300)
+    this.createCanvas(simon.myCanvas, canvasWidth, canvasHeight)
     this.ctx.clearRect(0,0,simon.myCanvas.width, simon.myCanvas.height)
     simon.ctx.imageSmoothingEnabled=false;
 

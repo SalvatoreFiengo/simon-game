@@ -92,7 +92,6 @@ function getNewPlayer(){
 }
 
 //Load player from Storage by clicking on a table in the "load game modal"
-
 function loadPlayer(){
     $("#saved-games tbody tr").click(function(){
         let id=$(this).attr("id");
@@ -359,18 +358,13 @@ function setQuitandScoreboardButton(){
     })
 
     $("#scoreboard").click(function(){
-        if(!$("#scoreboard-cell").is(":visible")){
            
             $(".canvas-cell, #footer-progress-bar").hide();
             
-            getGamesStat("#scoreboard-table")
-            
+            getGamesStat("#scoreboard-table");
+
             $("#scoreboard-cell").show();
         
-        }else{
-            $("#scoreboard").unbind("click").click(()=>{});
-            $(".canvas-cell, #footer-progress-bar").show();
-        }
     })
 }
 
@@ -393,7 +387,7 @@ function getGamesStat(selectedTable){
     if(simon.currentSavedGames != null && simon.currentSavedGames != undefined && simon.currentSavedGames.length>0){
         
         $(selectedTable+" thead")
-        .append("<tr><th class='text-center'><p>Name</p></th><th class='text-center'><p>Score</p></th><th class='text-center'><p>Last save</p></th></tr>");
+        .append("<tr><th class='text-center'><p>Name</p></th><th class='text-center'><p>Score</p></th><th class='text-center'><p>Last save</p></th><th class='text-center'><p id='del-all' class='pointer'>Delete All</p></th></tr>");
 
 
 
@@ -411,13 +405,30 @@ function getGamesStat(selectedTable){
             let player = simon.currentSavedGames[i]
             
             $(selectedTable+" tbody")
-                .append("<tr id="+player.id
+                .append("<tr class='pointer' id="+player.id
                 +"><td class='text-center'><p>"+player.name
                 +"</p></td><td class='text-center'><p>"+player.score+"</p></td>"
-                +"</td><td class='text-center'><p>"+player.lastRecordedGame+"</p></td><tr>")
+                +"</td><td class='text-center'><p>"+player.lastRecordedGame+"</p></td></td><td><i id="+player.id+" class='fa fa-trash-o'></i></td><tr>")
         }
+
+        $(selectedTable+" tbody tr td i").on('click',function(){
+            simon.currentSavedGames = JSON.parse(storage().getItem("0"));
+            let id=$(this).attr("id");
+            let selected = simon.currentSavedGames.indexOf(simon.currentSavedGames[id]);
+            console.log(simon.currentSavedGames[id]);
+            simon.currentSavedGames.splice(selected, 1);
+            console.log(simon.currentSavedGames);
+            storage().setItem(0,JSON.stringify(simon.currentSavedGames));
+            getGamesStat(selectedTable)
+        })
+
+        $("#del-all").on('click', function(){
+            storage().clear();
+            getGamesStat(selectedTable);
+        })
+
     }else{
-    $(selectedTable+" tbody").append("<tr><td class='text-center'> No saved games! </td></tr>")
+        $(selectedTable+" tbody").append("<tr><td class='red text-center'> No saved games! </td></tr>")
     }
     
 }

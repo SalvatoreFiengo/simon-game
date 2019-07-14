@@ -133,7 +133,6 @@
         $("#back-to-new-game, #saved-games-modal").show();        
         
         getGamesStat("#saved-games")
-
         loadPlayer();
 
         $("#back-to-new-game").click(function(){

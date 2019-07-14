@@ -37,7 +37,7 @@
 html {
     height: 100%;
     width: 100%;
-    scrollbar-width: 0; /*firefox */
+    scrollbar-width: none; /*firefox */
     -ms-overflow-style: none; /*ie 10+ */
 }
 
@@ -122,7 +122,7 @@ body {
 
 .custom-scrollbar{
     overflow-y: scroll;
-    scrollbar-width: 1em;
+    scrollbar-width: thin;
     -ms-overflow-style: scrollbar ; /*ie 10+ */
 }
 

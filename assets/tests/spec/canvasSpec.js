@@ -183,20 +183,26 @@ describe("simon mock method createCanvas", () => {
     let canvas;
     let width;
     let height;
-    let dpi = window.devicePixelRatio;
+    let canvasObject;
 
     beforeEach(() => {
         canvas = {};
+        canvasObject = {};
         canvas.mockGetContext = (dim="")=>dim;
         width = 300;
         height = 300;
         myCanvas={
             createCanvas : function(canvas, width, height){
                 if(canvas.mockGetContext){
-                    typeof(width) != "number" ? parseInt(width) : width;
-                    typeof(height) != "number" ? parseInt(height) : height;
-                    canvas.width = width *dpi;
-                    canvas.height = height *dpi;
+                    width = typeof(width)!= Number? parseInt(width) : width;
+                    height = typeof(height)!= Number? parseInt(height) : height;
+                    canvasObject.centerX = width /2;
+                    canvasObject.centerY = height /2;
+                    canvasObject.bigRadius = width/2.5;
+                    canvasObject.smallRadius = width/2.75;
+                    canvasObject.innerCirle = width/5;
+                    canvas.width = width;
+                    canvas.height = height;
                     return ctx = canvas.mockGetContext("2d");
                 }else{
                     return `<h2> canvas not supported! </h2>`;
@@ -216,14 +222,19 @@ describe("simon mock method createCanvas", () => {
         expect(myCanvas.createCanvas).toHaveBeenCalledWith(canvas, width, height)
     })
 
-    it("should return ctx", () => {
+    it("should return ctx, canvas height and width to be of type number", () => {
         // arrange
         spyOn(myCanvas, "createCanvas").and.callThrough();
         
         // act
+        height = "300";
+        width = "300";
         ctx = myCanvas.createCanvas(canvas, width, height)
         // expect
         expect(ctx).toEqual("2d");
+        console.log(canvas);
+        expect(canvas.height).toEqual(jasmine.any(Number));
+        expect(canvas.width).toEqual(jasmine.any(Number));
     })
 
     it("should not throw error if height and width are passed as strings", () => {

@@ -2,15 +2,14 @@
 simon.createCanvas = function getCanvas(canvas, width, height){
         
         if(canvas.getContext){
+            width = typeof(width)!= Number? parseInt(width) : width;
+            height = typeof(height)!= Number? parseInt(height) : height;
 
             simon.centerX = width /2;
             simon.centerY = height /2;
             simon.bigRadius = width/2.5;
             simon.smallRadius = width/2.75;
             simon.innerCirle = width/5;
-            console.log("innercircle "+simon.innerCirle)
-            typeof(width)? "string": width.toString();
-            typeof(height)? "string": height.toString();
 
             canvas.width = width;
             canvas.height = width;
@@ -24,10 +23,6 @@ simon.createCanvas = function getCanvas(canvas, width, height){
         }
  
 }
-
-simon.animateDpiCanvas = function reDrawDpiCanvas(){
-    simon.canvasDpiID = requestAnimationFrame(reDrawDpiCanvas);
-} 
 
 simon.drawObj = class CanvasObj{
     constructor(kind = "circle", path, x, y, r, start = 0, end, color, fill = true,endColor = null, antiClockwise = false){
@@ -142,6 +137,7 @@ simon.canvasText = (color, text = "Intro") => {
     simon.ctx.fillText(text, simon.centerX, simon.centerY +30);
 }
 
+/* function called to set up and then draw the canvas and canvas objects like circles, and buttons */
 simon.drawAll= function drawAll(canvasWidth=300, canvasHeight=300){
     
     this.createCanvas(simon.myCanvas, canvasWidth, canvasHeight)
@@ -175,7 +171,7 @@ simon.drawAll= function drawAll(canvasWidth=300, canvasHeight=300){
 }
 
 
-/*--setting up the canvas objects, circles, and buttons */
+
 
 
 

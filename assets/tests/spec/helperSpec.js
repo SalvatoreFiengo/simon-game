@@ -92,3 +92,57 @@ describe("local storage", () => {
         expect(mockWindow.getLenght()).toEqual(0);
     })
 })
+
+describe("function showHighlightedButtons", ()=>{
+    let arr;
+    let index;
+    let result;
+    let speed;
+    beforeEach(()=>{
+        index = 0;
+        arr = [];
+        result = [];
+        jasmine.clock().install();
+        
+    });
+
+    afterEach(() => {
+
+        jasmine.clock().uninstall();
+    });
+
+    array={
+        showHighlightedButtons : (arr, speed)=>{
+            var next = arr[index];
+            if(index < arr.length){
+                
+                result.push(next)
+        
+            }else{
+                index = 0;
+                return
+            }
+            index++
+            setTimeout(()=>array.showHighlightedButtons(arr, speed), speed+index);
+        } 
+    
+    }
+
+    it("should push into 'result array' arr indexes every cycle, based on speed", ()=>{
+        //arrange
+        arr = ["a","b",33,index];
+        speed = 30;
+        spyOn(array, "showHighlightedButtons").and.callThrough()
+        //act
+        array.showHighlightedButtons(arr,speed);
+
+        jasmine.clock().tick(300);
+
+        expect(result.length).toBe(4);
+        expect(result[0]).toBe("a");
+    })
+
+
+
+
+})

@@ -57,20 +57,20 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
-                                            <h4 class="modal-title" id="myModalLabel">Fancy a Game?</h4>
+                                            <h4 class="modal-title text-center" id="myModalLabel">Simon Game</h4>
                                         </div>
                                         <form action="#" method="GET">
                                             <div id="new-game-modal" class="modal-body">
                                                 
                                                 <div class="form-group">
                                                     <label for="name">Name</label>
-                                                    <input type="text" class="form-control" id="name" aria-required="true">
+                                                    <input type="text" class="form-control" id="name" aria-required="true" maxlength="10">
                                                 </div>
                                                 
                                             </div>
                                             <div id="saved-games-modal" class="modal-body">
                                                 <div class="form-group">
-                                                    <legend for="saved-games">Saved Games</legend>
+                                                    <h4><strong>Saved Games</strong></h4>
                                                     <table id="saved-games" class="table table-condensed table-hover">
                                                             <thead>
                                                             </thead>
@@ -92,13 +92,15 @@
                                 </div>
                             </div>
                         </td>
+                    </tr>
+                    <tr>  
                         <td id="scoreboard-cell" colspan="3">
                             <table id="scoreboard-table" class="table-condensed table-bordered text-center">
                                 <thead>
-
+                                    <tr><th></th></tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    <tr><td></td></tr>
                                 </tbody>
                             </table>
                         </td>
@@ -106,10 +108,11 @@
                 </tbody>
                 <tfoot id="footer-progress-bar">
                     <tr>
-                        <td colspan="4">
+                        <td colspan="3">
                             <div class="progress-wrap center-block text-center">
-                                <label class="green" for="next-lvl-bar">to next level</label>
+                                <h4 class="green">to next level</h4>
                                 <div class="progress">
+                                    
                                     <div id="next-lvl-bar" class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
                                         <span class="sr-only">60% Complete</span>
                                     </div>

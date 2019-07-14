@@ -16,7 +16,7 @@ function getMousePos(canvas,event){
 //known issues in Edge/IE as it access "local" and not from server
 
 function storage (){
-    if (window.localStorage){
+    if (window.localStorage && typeof(window.localStorage) != undefined){
         return {
 
             setItem: (key, value) => {
@@ -369,6 +369,7 @@ function setQuitandScoreboardButton(){
         
         }else{
             $("#scoreboard").unbind("click").click(()=>{});
+            $(".canvas-cell, #footer-progress-bar").show();
         }
     })
 }

@@ -112,8 +112,10 @@ specifically with Jasmine:
 3) tested local storage CRUD
 4) tested function that highlights buttons when an array of buttons is passed to it
 
-Also for every case tested, if necessary, also its "timeout" has been tested considering a different result after the set delay
+For every case tested, if necessary, its "timeout" has been tested as well considering a different result after the set delay
 All Jasmine tests run in [simon-gameSpec.html](https://salvatorefiengo.github.io/simon-game/assets/tests/simon-gameSpec.html)
+
+
 -------------------------------------------------------------------------------------------------------
 
 manually tested game: 
@@ -133,11 +135,16 @@ Tested save load functionality:
 
 
 ---
-Simon game website looks and works the same on all screen browser, Canvas will be drawn smaller if screen height is bigger than width so to provide a better result on mobile
+Simon game website looks and works the same on all screen browser, 
+
+Canvas will be drawn smaller if screen height is bigger than width so to provide a better result on mobile
+
 On Rotated screens for smaller devices user may not have the progress bar visible unless they scroll. not yet addressed
 
 current bug: if player starts with no name player name will show only after his first move:
+
 This is because a function updating player stats is updating player name as well
+
 --> fix will be to encode the player name check as soon as user selects player name 
 
 ## Deployment

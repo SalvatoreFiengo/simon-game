@@ -126,7 +126,9 @@ i {
 #paraghraphBoard {
     max-height: 40vh;
 }
-
+#paraghraphBoard p {
+    white-space: pre-line;
+}
 .custom-scrollbar{
     overflow-y: scroll;
     scrollbar-width: thin;

@@ -84,8 +84,16 @@ function showHighlightedButtons(arr, speed){
 //push new Player to array
 
 function getNewPlayer(){
-    simon.currentSavedGames=JSON.parse(storage().getItem("0"));             
+    simon.currentSavedGames=JSON.parse(storage().getItem("0")); 
+    $("#lvl").text(simon.player.currentLevel);        
     simon.player.name = $("#name:text").val();
+    if(simon.player.name == ""){
+        if(simon.currentSavedGames == null){
+            simon.player.name = "Player 0";
+        }else{
+        simon.player.name = "Player "+simon.currentSavedGames.length;
+        }
+    }   
     simon.currentSavedGames != null ? simon.currentSavedGames: simon.currentSavedGames = [];
     simon.player.id = simon.currentSavedGames.length;
     simon.currentSavedGames.push(simon.player);
@@ -135,9 +143,6 @@ function loadPlayer(){
 
 function updateSavedGame(count, player){
 
-    if(player.name == ""){
-        player.name = "Player "+simon.currentSavedGames.length
-    }
     date = new Date;
     dd = date.getDate();
     mm = date.getMonth()+1;
@@ -151,12 +156,12 @@ function updateSavedGame(count, player){
     // get timestamp, updating counter, current level and "simon moves"
     player.lastRecordedGame = currentDate;
     player.count = count;
-    player.currentLevel = simon.currentLevel;
+    player.currentLevel = simon.player.currentLevel;
     player.simonLevel = simon.level;
     
     //updating score based on current level "count" and number of times player reloads game
 
-    player.score = (simon.currentLevel*10) + count - (player.numberOfGames*2);
+    player.score = (player.currentLevel*10) + player.count - (player.numberOfGames*2);
      
     simon.currentSavedGames[player.id]=player;
 
@@ -177,7 +182,21 @@ function getRandomButton() {
 // at lvl 20 Player wins 
 
 function simonTurn (player){
-    $("#quit-game, #scoreboard").unbind("click").click(()=>{});
+    $("#quit-game").unbind("click").click(()=>{
+
+        $("#quit-game").text("Disabled while playing").addClass("red");
+            setTimeout(() => {
+            $("#quit-game").removeClass("red").text("Home");
+        }, 500);
+    })
+
+    $("#scoreboard").unbind("click").click(()=>{
+
+        $("#scoreboard").text("Disabled while playing").addClass("red")
+            setTimeout(() => {
+            $("#scoreboard").removeClass("red").text("Scoreboard");
+        }, 500);
+    });
     
     if(!simon.isPlayerTurn){
         simon.isPlayerTurn = true;
@@ -277,6 +296,7 @@ function checkchoice(choice, playerChoices,player){
             && i == simonChoices.length-1){
             
             simon.playerCoiches = [];
+            console.log("lvl"+simon.currentLevel)
             updateSavedGame(player.count, player);
             setTimeout(() => {
                 simonTurn(player);
@@ -328,18 +348,16 @@ function updateProgressBar(percentage){
 // disables quit and scoreboard "links" before the start of the game
 // sets a time out for the game itself and reset player stats with a small delay
 function simonGame(player){
-
-    clearTimeout(simon.game);
+    
     $("#quit-game, #scoreboard").unbind("click").click(()=>{});
 
-    simon.game=setTimeout(()=>{
-
+    setTimeout(()=>{
         setTimeout(()=>{
             simonTurn(player);
             resetPlayer(simon.player);
-        },simon.speed)
+        },simon.speed+50)
         
-    },simon.speed+5) 
+    },simon.speed+100) 
 }
 // scoreboard and load game as funciton so that can be called again to be set unset
 
@@ -357,7 +375,7 @@ function setQuitandScoreboardButton(){
         $("#main-page").slideDown(200);
     })
 
-    $("#scoreboard").click(function(){
+    $("#scoreboard").unbind("click").click(function(){
            
             $(".canvas-cell, #footer-progress-bar").hide();
             

@@ -37,7 +37,7 @@
             simon.drawAll(300,300);   
         }
 
-        $(" #play-game, #back-to-canvas, #scoreboard-cell").hide();
+        $("#play-game, #back-to-canvas, #scoreboard-cell").hide();
         $("#quit-game,#scoreboard, .level").fadeTo("fast",0);
 
         $("#game-wrap").fadeIn(500);
@@ -99,8 +99,10 @@
                     clearInterval(introTimeOut);
                     clearInterval(introSecondTimeOut);
                     //starts the game --helpers.js
-                    simonGame(simon.player);
-                    
+
+                    simonGame(simon.player)
+
+ 
                 })
 
 

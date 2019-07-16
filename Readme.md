@@ -141,11 +141,11 @@ Canvas will be drawn smaller if screen height is bigger than width so to provide
 
 On Rotated screens for smaller devices user may not have the progress bar visible unless they scroll. not yet addressed
 
-current bug: if player starts with no name player name will show only after his first move:
+bug fixed: modal contained a for with method "get", only the first time page is loaded and when submitted with play button
 
-This is because a function updating player stats is updating player name as well
+page will reload as soon as code will read settimeout. I could not find much on the web about this behaviour
 
---> fix will be to encode the player name check as soon as user selects player name 
+fix: remove method from "form" selector
 
 ## Deployment
 

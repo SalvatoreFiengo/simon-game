@@ -129,6 +129,7 @@ i {
 #paraghraphBoard p {
     white-space: pre-line;
 }
+
 .custom-scrollbar{
     overflow-y: scroll;
     scrollbar-width: thin;
@@ -168,7 +169,7 @@ i {
     width: 33%;
 }
 
-#game-table p, #scoreboard-table p{
+table p{
     color: rgb(212, 211, 211);
 }
 

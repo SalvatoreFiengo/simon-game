@@ -145,7 +145,7 @@ bug fixed: modal contained a for with method "get", only the first time page is 
 
 page will reload as soon as code will read settimeout. I could not find much on the web about this behaviour
 
-fix: remove method from "form" selector
+fix: remove method from "form" selector.
 
 ## Deployment
 

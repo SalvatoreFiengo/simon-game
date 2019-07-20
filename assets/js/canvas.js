@@ -1,31 +1,31 @@
 
 simon.createCanvas = function getCanvas(canvas, width, height){
         
-        if(canvas.getContext){
-            width = typeof(width)!= Number? parseInt(width) : width;
-            height = typeof(height)!= Number? parseInt(height) : height;
+    if(canvas.getContext){
+        width = typeof(width)!= Number? parseInt(width) : width;
+        height = typeof(height)!= Number? parseInt(height) : height;
 
-            simon.centerX = width /2;
-            simon.centerY = height /2;
-            simon.bigRadius = width/2.5;
-            simon.smallRadius = width/2.75;
-            simon.innerCirle = width/5;
+        simon.centerX = width /2;
+        simon.centerY = height /2;
+        simon.bigRadius = width/2.5;
+        simon.smallRadius = width/2.75;
+        simon.innerCirle = width/5;
 
-            canvas.width = width;
-            canvas.height = width;
+        canvas.width = width;
+        canvas.height = width;
 
 
-            simon.ctx = canvas.getContext("2d");
-            
-            return simon.ctx
-        }else{
-            return `<h2> canvas not supported! </h2>`;
-        }
+        simon.ctx = canvas.getContext("2d");
+        
+        return simon.ctx;
+    }else{
+        return `<h2> canvas not supported! </h2>`;
+    }
  
-}
+};
 
 simon.drawObj = class CanvasObj{
-    constructor(kind = "circle", path, x, y, r, start = 0, end, color, soundOn, fill = true,endColor = null, antiClockwise = false){
+    constructor(kind, path, x, y, r, start, end, color, soundOn, fill = true,endColor = null, antiClockwise = false){
         this.kind = kind.toString();
         this.path = path;
         this.x = x;
@@ -38,7 +38,7 @@ simon.drawObj = class CanvasObj{
         this.fill = fill;
         this.endColor = endColor;
         this.clicked = false;
-        this.soundOn = soundOn
+        this.soundOn = soundOn;
     }
 
     setColor(){
@@ -79,9 +79,9 @@ simon.drawObj = class CanvasObj{
                     
                     if(soundPromise !== undefined){
                         soundPromise.then(_ =>{
-                            return
+                            return;
                         }).catch(error =>{
-                            console.log(error)
+                            console.log(error);
                         }); 
                     }
                 }
@@ -102,8 +102,7 @@ simon.drawObj = class CanvasObj{
                     
                  
                 }, 400);
-            },1)
-            
+            },1);
  
         }
 
@@ -111,18 +110,18 @@ simon.drawObj = class CanvasObj{
 
     draw(){
         this.path = new Path2D();
-        this.path.arc(simon.centerX, simon.centerY, this.r, Math.PI*this.start, Math.PI*this.end, this.antiClockwise)
+        this.path.arc(simon.centerX, simon.centerY, this.r, Math.PI*this.start, Math.PI*this.end, this.antiClockwise);
         this.kind == "circle" ? this.path.moveTo(simon.centerX, simon.centerY) : this.path.lineTo(simon.centerX, simon.centerY);
         this.setColor();
         this.path.closePath();
         
     }
 
-}
+};
 
 simon.canvasText = (color, text = "Intro") => {
     simon.startCircle.draw();
-    simon.ctx.moveTo(simon.centerX, simon.centerY)
+    simon.ctx.moveTo(simon.centerX, simon.centerY);
     var startGame = new Path2D();
     startGame.arc(simon.centerX, simon.centerY, simon.innerCirle-20, 0, Math.PI*2, true);
     simon.ctx.strokeStyle= "black";
@@ -138,22 +137,22 @@ simon.canvasText = (color, text = "Intro") => {
     simon.ctx.font = "bold 1em Baloo Da";
     simon.ctx.fillStyle = color;
     simon.ctx.fillText(text, simon.centerX, simon.centerY +30);
-}
+};
 
 /* function called to set up and then draw the canvas and canvas objects like circles, and buttons */
 simon.drawAll= function drawAll(canvasWidth=300, canvasHeight=300){
     
-    this.createCanvas(simon.myCanvas, canvasWidth, canvasHeight)
-    this.ctx.clearRect(0,0,simon.myCanvas.width, simon.myCanvas.height)
+    this.createCanvas(simon.myCanvas, canvasWidth, canvasHeight);
+    this.ctx.clearRect(0,0,simon.myCanvas.width, simon.myCanvas.height);
     simon.ctx.imageSmoothingEnabled=false;
 
     simon.circle = new simon.drawObj("circle", simon.path, simon.centerX, simon.centerY, simon.bigRadius, 0, 2, "black", simon.soundOn);
     simon.smallCircle = new simon.drawObj("circle", simon.path, simon.centerX, simon.centerY, simon.innerCirle, 0, 2, "black", simon.soundOn);
     simon.startCircle = new simon.drawObj("circle", simon.path, simon.centerX, simon.centerY, simon.innerCirle, 0, 2, "black", simon.soundOn, false);
-    simon.blueButton = new simon.drawObj("Blue", simon.path, simon.centerX, simon.centerY, simon.smallRadius,0.02,0.48, "blue", simon.soundOn )
-    simon.redButton = new simon.drawObj("Red", simon.path, simon.centerX, simon.centerY, simon.smallRadius,1.52,1.98, "red", simon.soundOn, true, "#fa7268" )
-    simon.greenButton = new simon.drawObj("Green",simon.path, simon.centerX, simon.centerY, simon.smallRadius,0.52,0.98, "green", simon.soundOn )
-    simon.yellowButton = new simon.drawObj("Yellow", simon.path, simon.centerX, simon.centerY, simon.smallRadius,1.02,1.48, "yellow", simon.soundOn )
+    simon.blueButton = new simon.drawObj("Blue", simon.path, simon.centerX, simon.centerY, simon.smallRadius,0.02,0.48, "blue", simon.soundOn);
+    simon.redButton = new simon.drawObj("Red", simon.path, simon.centerX, simon.centerY, simon.smallRadius,1.52,1.98, "red", simon.soundOn, true, "#fa7268");
+    simon.greenButton = new simon.drawObj("Green",simon.path, simon.centerX, simon.centerY, simon.smallRadius,0.52,0.98, "green", simon.soundOn);
+    simon.yellowButton = new simon.drawObj("Yellow", simon.path, simon.centerX, simon.centerY, simon.smallRadius,1.02,1.48, "yellow", simon.soundOn);
     
     simon.buttonBaseArr=[simon.blueButton, simon.redButton, simon.greenButton, simon.yellowButton];
 
@@ -167,11 +166,11 @@ simon.drawAll= function drawAll(canvasWidth=300, canvasHeight=300){
 
 
     
-    this.smallCircle.draw()
+    this.smallCircle.draw();
     this.canvasText("red, Intro");
         
 
-}
+};
 
 
 

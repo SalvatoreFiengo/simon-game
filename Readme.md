@@ -111,10 +111,12 @@ Additional feature may be implemented in the future as follows:
 
 ## Testing
 
-- HTML tested with [W3 validator](https://validator.w3.org)
-- CSS tested with 
+- HTML tested with [HTML W3 validator](https://validator.w3.org)
+- CSS tested with [CSS W3 validator](https://jigsaw.w3.org/css-validator/)
     1 error: scrollbar-width: thin/none doesn't exist, this is an experimental feature currently working and documented as correct though by [Mozilla developer website](https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-width)
 - Javascript tested with [Jasmine 3.4.0](https://jasmine.github.io/pages/docs_home.html)
+- Javascript tested with [JsHint](https://jshint.com/)
+    few warnings with ternary expressions especially if they result in calling classes methods;
 
 specifically with Jasmine: 
 1) tested the canvas class with a mock and tested its methods were possible

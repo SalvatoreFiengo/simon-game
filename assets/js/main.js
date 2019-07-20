@@ -12,13 +12,13 @@
 
     $("#switch-home-rules").click(function(){
         if($("#paraghraphBoard p").text()== description){
-            $("#paraghraphBoard p").text(rules)
+            $("#paraghraphBoard p").text(rules);
             $(this).text("Home");
-            return
+            return;
         }
         $("#paraghraphBoard p").text(description);
         $(this).text("Rules");
-    })
+    });
 
     // when click on game switch sections and show game section with canvas 
     // update current player game level
@@ -44,7 +44,7 @@
 
         // presetting the level badge to player game level
 
-        $("#lvl").text(simon.player.currentLevel)
+        $("#lvl").text(simon.player.currentLevel);
 
         let introTimeOut = setTimeout(() => {
 
@@ -53,17 +53,17 @@
                 // function to check if the central circle is clicked if it is write intro in red
 
                 if(canvasElementIsClicked(simon.smallCircle, event)){
-                    return
+                    return;
                 }
 
-            })
+            });
             
             //recursive function, call itself every "game speed time" 
             //takes an array of canvas simon button objects and makes them blink at games speed --helper.js
             simon.intro = true;
             simon.smallCircle.draw();
             simon.canvasText("red", "Intro");
-            showHighlightedButtons(simon.buttonBaseArr, simon.speed)
+            showHighlightedButtons(simon.buttonBaseArr, simon.speed);
             
             let introSecondTimeOut=setTimeout(function(){
 
@@ -81,7 +81,7 @@
                 simon.buttonBaseArr.forEach((item)=>{
                     item.clicked = true;
                     item.setColor();
-                })
+                });
 
                 $("#play-game").unbind("click").click(function(){
 
@@ -100,10 +100,9 @@
                     clearInterval(introSecondTimeOut);
                     //starts the game --helpers.js
 
-                    simonGame(simon.player)
+                    simonGame(simon.player);
 
- 
-                })
+                });
 
 
                 $("#canvas").unbind("click").click(function(){
@@ -111,7 +110,7 @@
                     $("#game-paused").modal("show");
                     $("#new-game-modal, #play-game").show();
                     $("#back-to-new-game, #saved-games-modal").hide();
-                })
+                });
 
                 $(document).on("click","#back-to-canvas",(function(){     
                     
@@ -119,10 +118,10 @@
                     $("#quit-game").show();
                     $(".canvas-cell, #footer-progress-bar").fadeIn();
 
-                }))
+                }));
 
-            },3500)
-        },501)
+            },3500);
+        },501);
 
 
     });
@@ -134,7 +133,7 @@
 
         $("#back-to-new-game, #saved-games-modal").show();        
         
-        getGamesStat("#saved-games")
+        getGamesStat("#saved-games");
         loadPlayer();
 
         $("#back-to-new-game").click(function(){
@@ -142,8 +141,8 @@
             $("#new-game-modal, #play-game").show();
             $("#saved-games-modal, #back-to-new-game").hide();
 
-        })
-    })
+        });
+    });
         
     $("#quit-game").click(function() {
         $("#quit-modal").modal("show");
@@ -151,11 +150,11 @@
             simon.isPlayerTurn=false;
             quitGame();
         });
-    })
+    });
 
     $("#settings, #sound").click(function(){
         $("#settings-modal").modal("show");
-    })
+    });
 
     // sound off/ sound on
     
@@ -177,8 +176,8 @@
                     simon.drawAll();   
                 }
                 simon.level.forEach((button)=>{
-                    button.soundOn = simon.soundOn
-                })
+                    button.soundOn = simon.soundOn;
+                });
 
             }else{
                 simon.soundOn = !simon.soundOn;
@@ -189,21 +188,24 @@
                     simon.drawAll();   
                 }
                 simon.level.forEach((button)=>{
-                    button.soundOn = simon.soundOn
-                })
+                    button.soundOn = simon.soundOn;
+                });
             }
         }
-    })
+    });
 
+    $(".not-yet").click(function(){
+        $("#features-na-modal").modal("show");
+    })
     // footer menu: when clicked will close other menus
     $("footer ul>li:first-child").click(function(){
         if($("footer").width()>767){
-            return
+            return;
         }else{
             $(this).siblings().toggle();
             var id=$(this).parent().attr("id");
             $("ul:not(#"+id+") >li:first-child").siblings().hide();
         }
-    })
+    });
 
-});})(jQuery)
+});})(jQuery);

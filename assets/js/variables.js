@@ -9,11 +9,10 @@ simon.player={
     count: 0,
     simonLevel : [],
     currentLevel: 0,
-    count: [],
     lastRecordedGame: [],
     numberOfGames:0,
     score: []
-}
+};
 
 simon.intro = false;
 simon.currentLevel = simon.player.currentLevel;

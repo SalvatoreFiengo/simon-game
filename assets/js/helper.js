@@ -23,7 +23,7 @@ function storage (){
                 window.localStorage.setItem(key, value);
             },
             getItem: (key) => {
-                return window.localStorage.getItem(key)
+                return window.localStorage.getItem(key);
             },
             removeItem: (key) => {
                 window.localStorage.removeItem(key);
@@ -34,9 +34,9 @@ function storage (){
             getLenght: () => {
                 return window.localStorage.length;
             }
-        }
+        };
     }else{
-        alert("save game not possible due to browser version")
+        alert("save game not possible due to browser version");
     }
 }
 
@@ -51,7 +51,7 @@ function canvasElementIsClicked(item, event){
         return item.kind;
     }else{
 
-        return false
+        return false;
     }
 
 }
@@ -69,9 +69,9 @@ function showHighlightedButtons(arr, speed){
 
     }else{
         index = 0;
-        return
+        return;
     }
-    index++
+    index++;
     setTimeout(()=>showHighlightedButtons(arr, speed), speed+index);
 } 
 
@@ -101,14 +101,13 @@ function getNewPlayer(){
     }else if(simon.currentSavedGames !== null){
 
         let count=0;
-        playerName = simon.player.name.split(" ")
+        playerName = simon.player.name.split(" ");
 
         simon.currentSavedGames.forEach((item)=>{
             selected = item.name.split(" ");
 
-            if(item.name.toLowerCase() == simon.player.name.toLowerCase() 
-            || selected[0].toLowerCase() == playerName[0].toLowerCase()){
-                count+=1
+            if(item.name.toLowerCase() == simon.player.name.toLowerCase() || selected[0].toLowerCase() == playerName[0].toLowerCase()){
+                count+=1;
             } 
 
         });
@@ -116,7 +115,8 @@ function getNewPlayer(){
         simon.player.name = simon.player.name+" ("+count+")";
     }   
 
-    simon.currentSavedGames != null ? simon.currentSavedGames: simon.currentSavedGames = [];
+    if(simon.currentSavedGames == null ){simon.currentSavedGames = [];}
+
     simon.player.id = simon.currentSavedGames.length;
     simon.currentSavedGames.push(simon.player);
 }
@@ -152,32 +152,32 @@ function loadPlayer(){
                         simon.level.push(simon.buttonBaseArr[i]);
                     }
                 }
-            })
+            });
         }
 
         //setting game level to loaded player level
 
-        $("#lvl").text(simon.player.currentLevel)
+        $("#lvl").text(simon.player.currentLevel);
         $("#game-paused").modal("hide");
 
         // starting game
         simonGame(simon.player);
-    })
+    });
 }
 
 //Updates Player stat every game cycle and if quit
 
 function updateSavedGame(count, player){
 
-    date = new Date;
+    date = new Date();
     dd = date.getDate();
     mm = date.getMonth()+1;
     hr = date.getHours();
     min = date.getMinutes();
 
-    if(dd<10){dd="0"+dd};
-    if(mm<10){mm="0"+mm};
-    currentDate = dd+"/"+mm+" "+hr+":"+min
+    if(dd<10){dd="0"+dd;}
+    if(mm<10){mm="0"+mm;}
+    currentDate = dd+"/"+mm+" "+hr+":"+min;
 
     // get timestamp, updating counter, current level and "simon moves"
     player.lastRecordedGame = currentDate;
@@ -210,7 +210,7 @@ function getRandomButton() {
 function simonTurn (player){
     $("#scoreboard").unbind("click").click(()=>{
 
-        $("#scoreboard").text("Disabled while playing").addClass("red")
+        $("#scoreboard").text("Disabled while playing").addClass("red");
             setTimeout(() => {
             $("#scoreboard").removeClass("red").text("Scoreboard");
         }, 500);
@@ -226,7 +226,7 @@ function simonTurn (player){
     k= getRandomButton();
     simon.level.push(buttons[k]);
 
-    showHighlightedButtons(simon.level, simon.speed)
+    showHighlightedButtons(simon.level, simon.speed);
     
     if(simon.player.currentLevel<=20){
         
@@ -236,16 +236,16 @@ function simonTurn (player){
             updateProgressBar(percentage); 
         }else{
             percentage = 0;
-            simon.player.currentLevel++ 
+            simon.player.currentLevel++; 
             updateProgressBar(percentage);
-            $("#lvl").text(simon.player.currentLevel)
+            $("#lvl").text(simon.player.currentLevel);
             player.count = 0;
         }
         playerChoice(player);
-        player.count++
+        player.count++;
     }else{
         setTimeout(() => {
-            alert("You Win!") 
+            alert("You Win!"); 
         }, simon.speed); 
     }
 }
@@ -266,7 +266,7 @@ function playerChosenButton(move, player){
             if(canvasElementIsClicked(simon.smallCircle,event)){ 
                 simon.smallCircle.draw();
                 simon.canvasText("Yellow", "Your move");
-                return
+                return;
             }
             else{
                 for(k=0; k<simon.buttonBaseArr.length;k++){
@@ -278,16 +278,16 @@ function playerChosenButton(move, player){
                         
                             if(simon.playerCoiches.length>0){
                                 checkchoice(choice,simon.playerCoiches,player);
-                                return
+                                return;
                             }
                         }
                     }
                 }
-        })
+        });
         
         let choice = setInterval(()=>{
-            playerChosenButton(move)
-        }, 2000)
+            playerChosenButton(move);
+        }, 2000);
         
         clearInterval(choice);
       
@@ -303,15 +303,13 @@ function playerChosenButton(move, player){
 function checkchoice(choice, playerChoices,player){
 
     setScoreboardButton();
-    clearInterval(choice)
+    clearInterval(choice);
 
     let simonChoices= simon.level.map((item)=>item.kind);
     
     for(i=0; i<playerChoices.length; i++){
     
-        if(playerChoices[i] == simonChoices[i] 
-            && i==playerChoices.length-1 
-            && i == simonChoices.length-1){
+        if(playerChoices[i] == simonChoices[i] && i==playerChoices.length-1 && i == simonChoices.length-1){
             
             simon.playerCoiches = [];
            
@@ -320,8 +318,7 @@ function checkchoice(choice, playerChoices,player){
                 simonTurn(player);
             }, simon.speed);    
         }
-        else if(playerChoices[i] == simonChoices[i] 
-            && i==playerChoices.length-1 && i < simonChoices.length-1){
+        else if(playerChoices[i] == simonChoices[i] && i==playerChoices.length-1 && i < simonChoices.length-1){
             
             playerChoice(player);
         }
@@ -338,8 +335,8 @@ function checkchoice(choice, playerChoices,player){
 
                 simon.level = [];
 
-                simon.smallCircle.draw()
-                simon.canvasText("green", "Start")
+                simon.smallCircle.draw();
+                simon.canvasText("green", "Start");
 
                 $("#canvas").unbind("click").click(function(){
                     if(canvasElementIsClicked(simon.smallCircle,event)){ 
@@ -347,10 +344,10 @@ function checkchoice(choice, playerChoices,player){
                         simon.canvasText("green, Start");
                         $("#game-paused").modal("show");
                     }
-                }) 
+                }); 
             }, simon.speed); 
 
-            return
+            return;
         }
     }
   
@@ -360,8 +357,8 @@ function checkchoice(choice, playerChoices,player){
 // every 5 times it resets to 0 and lvl badge increments of 1
 function updateProgressBar(percentage){
     
-    $("#next-lvl-bar").attr("aria-valuenow", percentage+" ").attr("style", "width:"+percentage+"%")
-    $("#next-lvl-bar span").text(percentage + "% Complete")
+    $("#next-lvl-bar").attr("aria-valuenow", percentage+" ").attr("style", "width:"+percentage+"%");
+    $("#next-lvl-bar span").text(percentage + "% Complete");
 }
 
 // disables quit and scoreboard "links" before the start of the game
@@ -374,21 +371,21 @@ function simonGame(player){
         setTimeout(()=>{
             simonTurn(player);
             
-        },simon.speed+50)
+        },simon.speed+50);
         
-    },simon.speed+100) 
+    },simon.speed+100); 
 }
 
 function quitGame(){
     simon.currentSavedGames = JSON.parse(storage().getItem("0"));
     if(simon.currentSavedGames !== null){
-        updateSavedGame(simon.player.count, simon.player)
+        updateSavedGame(simon.player.count, simon.player);
     }
     resetPlayer(simon.player);
     simon.level = [];
 
-    simon.smallCircle.draw()
-    simon.canvasText("green", "Start")
+    simon.smallCircle.draw();
+    simon.canvasText("green", "Start");
 
     updateProgressBar(100);
 
@@ -410,7 +407,7 @@ function setScoreboardButton(){
 
             $("#scoreboard-cell").show();
         
-    })
+    });
 }
 
 function resetPlayer(player){
@@ -441,22 +438,23 @@ function getGamesStat(selectedTable){
 
         if(simon.currentSavedGames.length>1){
             simon.currentSavedGames.sort(function(a, b){
-                return b.score-a.score
+                return b.score-a.score;
             });
         }else{
             simon.currentSavedGames.sort(function(a, b){
-                return b.lastRecordedGame-a.lastRecordedGame
+                return b.lastRecordedGame-a.lastRecordedGame;
             }); 
         }
 
         for(i=0; i<simon.currentSavedGames.length; i++){
-            let player = simon.currentSavedGames[i]
+            let player = simon.currentSavedGames[i];
             
             $(selectedTable+" tbody")
-                .append("<tr class='pointer' id="+player.id
-                +"><td class='text-center'><p>"+player.name
-                +"</p></td><td class='text-center'><p>"+player.score+"</p></td>"
-                +"</td><td class='text-center'><p>"+player.lastRecordedGame+"</p></td></td><td><i id="+player.id+" class='fa fa-trash-o'></i></td><tr>")
+                .append("<tr class='pointer' id="+player.id+
+                "><td class='text-center'><p>"+player.name+
+                "</p></td><td class='text-center'><p>"+player.score+"</p></td>"+
+                "</td><td class='text-center'><p>"+player.lastRecordedGame+
+                "</p></td></td><td><i id="+player.id+" class='fa fa-trash-o'></i></td><tr>");
         }
 
         $(selectedTable+" tbody tr td i").on('click',function(){
@@ -467,16 +465,16 @@ function getGamesStat(selectedTable){
             simon.currentSavedGames.splice(selected, 1);
            
             storage().setItem(0,JSON.stringify(simon.currentSavedGames));
-            getGamesStat(selectedTable)
-        })
+            getGamesStat(selectedTable);
+        });
 
         $("#del-all").on('click', function(){
             storage().clear();
             getGamesStat(selectedTable);
-        })
+        });
 
     }else{
-        $(selectedTable+" tbody").append("<tr><td class='red text-center'> No saved games! </td></tr>")
+        $(selectedTable+" tbody").append("<tr><td class='red text-center'> No saved games! </td></tr>");
     }
     
 }

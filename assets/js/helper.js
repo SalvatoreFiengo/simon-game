@@ -85,26 +85,37 @@ function showHighlightedButtons(arr, speed){
 
 function getNewPlayer(){
     simon.currentSavedGames=JSON.parse(storage().getItem("0")); 
-    $("#lvl").text(simon.player.currentLevel);        
+
+    $("#lvl").text(simon.player.currentLevel); 
+
     simon.player.name = $("#name:text").val();
+
     if(simon.player.name == ""){
+
         if(simon.currentSavedGames == null){
             simon.player.name = "Player 0";
         }else{
         simon.player.name = "Player "+simon.currentSavedGames.length;
         }
+
     }else if(simon.currentSavedGames !== null){
+
         let count=0;
         playerName = simon.player.name.split(" ")
+
         simon.currentSavedGames.forEach((item)=>{
-            selected = item.name.split(" ")
+            selected = item.name.split(" ");
+
             if(item.name.toLowerCase() == simon.player.name.toLowerCase() 
             || selected[0].toLowerCase() == playerName[0].toLowerCase()){
                 count+=1
             } 
+
         });
+
         simon.player.name = simon.player.name+" ("+count+")";
     }   
+
     simon.currentSavedGames != null ? simon.currentSavedGames: simon.currentSavedGames = [];
     simon.player.id = simon.currentSavedGames.length;
     simon.currentSavedGames.push(simon.player);
@@ -113,6 +124,7 @@ function getNewPlayer(){
 //Load player from Storage by clicking on a table in the "load game modal"
 function loadPlayer(){
     $("#saved-games tbody tr").click(function(){
+
         let id=$(this).attr("id");
                 
         let simonSavedMoves=[];
@@ -130,9 +142,12 @@ function loadPlayer(){
         //once got saved game from storage objects will not be able to call methods due to JSON.stringify/parse
 
         if(simon.level.length < simon.currentSavedGames[id].simonLevel.length){
+
             simonSavedMoves=[...simon.currentSavedGames[id].simonLevel];
+
             simonSavedMoves.forEach((button)=>{
                 for(i=0; i<simon.buttonBaseArr.length; i++){
+
                     if(button.kind == simon.buttonBaseArr[i].kind){
                         simon.level.push(simon.buttonBaseArr[i]);
                     }
@@ -217,7 +232,7 @@ function simonTurn (player){
         
         let percentage = player.count*20;
         
-        if(player.count < 5){
+        if(player.count <= 5){
             updateProgressBar(percentage); 
         }else{
             percentage = 0;
@@ -279,8 +294,8 @@ function playerChosenButton(move, player){
 }
 
 // funciton called in playerChosenButton 
-// sets Quit and Scoreboard button in case Player wants to leave
-// clears the interval: choice from playerChosenButton
+// sets Scoreboard button in case Player wants to review the scores
+// clears the interval: choice from playerChosenButton just in case
 // if player moves are same number of Simon's is simon turn
 // if are less is player turn
 // if move is wrong game over
@@ -383,7 +398,7 @@ function quitGame(){
    
     $("#main-page").slideDown(200);
 }
-// reset scoreboard click, it will be disabled during game
+// reset scoreboard click, as it will be disabled during game
 
 function setScoreboardButton(){
 

@@ -28,17 +28,24 @@ User can repeat plus a bonus every level reached minus the times player will loa
  ----------------------------------
 ## UX
  
-This website is a game application, Players will be able to store their games and come back later to play again
+This website is a game application, 
+in main section users can read history of the game and rules plus decide if they want to play with sound or not
+in game section Players are able to store their games and come back later to play again
+surf the scoreboard, have a bar to show progress and set sound on or off
 
 ### user stories
 
-As a Simon player, I want to review the game discalimer.
-I want then click on rules and review the game rules.
-as a player I want to click on game and open the game page which will launch an intro with sounds
+As a Simon player, I want to review the game discalimer.  
+I want then click on rules and review the game rules.  
+I want to be able to switch sound off before game starts  
+as a player I want to click on game and open the game page which will launch an intro with sounds if sound is on
 I want to be able to check the current scoreboard and return to home if needed.
 I want to click on start at the center of simon game and insert a name or load a previous game
 I want to click on Simon's buttons and be aware if i fail or get it right.
 at the end of the game I want to be scored based on my performance 
+if a game is started with no name I want to be remembered with a default name, different every time
+If a game is started with a name already in use I want the game to give me a way to 
+differentiate those names while playing and on the scoreboard 
 
 ### website mockup
 website mockup png are available in the mockup folder of this repository
@@ -47,40 +54,43 @@ website mockup png are available in the mockup folder of this repository
 
 This website is a one page application, 
 
-Feature 1, Simon Game has been developed using HTML5 canvas
+Feature 1, User can switch sound on and off
 
-Feature 2, player will be advised if an "intro" is being played by Simon interface
+Feature 2, Simon Game has been developed using HTML5 canvas
 
-Feature 3, player can set up their name 
+Feature 3, player will be advised if an "intro" is being played by Simon interface
 
-Feature 4, player can load previous games 
+Feature 4, player can set up their name 
 
-Feature 5, player can see a bar that will be filled every time they get all simon choiches correctly
+Feature 5, player can load previous games 
 
-Feature 6, every 5 "correct combination" player will see game level going up
+Feature 6, player can see a bar that will be filled every time they get all simon choiches correctly
 
-Feature 7, Player name will be displayed at the center of Simon game interface while playing
+Feature 7, every 5 "correct combination" player will see game level going up
 
-Feature 8, player will know if they lose or win via alerts on the page
+Feature 8, Player name will be displayed at the center of Simon game interface while playing
+
+Feature 9, player will know if they lose or win via alerts on the page
 
 ### Existing Features
 
-- Feature 1 - every single part of Simon game is an object with his own path, this garantees that user clicks will always be                    tracked correclty by the app, using Canvas api.
-- Feature 2 - does not allow Users to click on other features/buttons/links while intro is playing.
+- Feature 1 - User can switch sound off and on both on landing page (section) and during the game via "settings"
+
+- Feature 2 - every single part of Simon game is an object with his own path, this garantees that user clicks will always be                    tracked correclty by the app, using Canvas api.
+- Feature 3 - does not allow Users to click on other features/buttons/links while intro is playing.
               User will see "intro" in red at the cednter of Simon's game interface  
-- Feature 3 - By clicking start at the center of Simon's game onterface, this will show a modal and user can choose if create a                 new game or load one
+- Feature 4 - By clicking start at the center of Simon's game onterface, this will show a modal and user can choose if create a                 new game or load one
               Create a new game via filling the new game input, maximum ten charachters
-- Feature 4 - User can load a game from the new game modal by selecting "load game" button, it will display all games currently                 saved on the same machine. User can click on one of these to get their game loaded and start from where they left
-- Feature 5 - While playing user can see a bar at the base of the game page that will be filled every time he gets Simon's moves                correctly, at 100% will be reset to 0.
-- Feature 6 - every time the bar is completely filled game level will increse of 1, every time it happens player will get a bonus               at their score.
-- Feature 7 - player name will always be shown at the center of Simon's game interface, whereas if player name is not selected it               will be shown as "Player" plus a number that depends on how many game where saved before: if game has been played                 by someone who chose a name and the second player won't chose a name they will get "Player 2" as a name
-- Feature 8 - an alert will let player know if the move is wrong or if they have won
+- Feature 5 - User can load a game from the new game modal by selecting "load game" button, it will display all games currently                 saved on the same machine. User can click on one of these to get their game loaded and start from where they left
+- Feature 6 - While playing user can see a bar at the base of the game page that will be filled every time he gets Simon's moves                correctly, at 100% will be reset to 0.
+- Feature 7 - every time the bar is completely filled game level will increse of 1, every time it happens player will get a bonus               at their score.
+- Feature 8 - player name will always be shown at the center of Simon's game interface, whereas if player name is not selected it               will be shown as "Player" plus a number that depends on how many game where saved before: if game has been played                 by someone who chose a name and the second player won't chose a name they will get "Player 2" as a name
+- Feature 9 - an alert will let player know if the move is wrong or if they have won
 
 Additional feature may be implemented in the future as follows:
  
 - Canvas background changing based on level, success or fail
 - when player is created will store his games in his own "state" and show saved games only they can access - this will ensure       that two players on same webpage won't play same games.
-- clicking on Simon Game during a game will show a "game paused" modal 
 
 
 ### Features Left to Implement
@@ -132,6 +142,7 @@ Tested save load functionality:
     4. Player name will show in scoreboard
     5. next game: loaded previous game, scoreboard updated correctly
     6. if no game has been played yet, scoreboard and load game will show a "no saved game" warning
+    7. if game is started with an existing name player name will have a number added to its string
 
 
 ---
@@ -141,11 +152,12 @@ Canvas will be drawn smaller if screen height is bigger than width so to provide
 
 On Rotated screens for smaller devices user may not have the progress bar visible unless they scroll. not yet addressed
 
-bug fixed: modal contained a for with method "get", only the first time page is loaded and when submitted with play button
+bug fixed: modal contained a form, only the first time page is loaded and when submitted with play button
 
 page will reload as soon as code will read settimeout. I could not find much on the web about this behaviour
 
-fix: remove method from "form" selector.
+fix: remove submit from play button. 
+- to be addressed: when in a modal if return key is pressed it should have same result of load or new game button 
 
 ## Deployment
 

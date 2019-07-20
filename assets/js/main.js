@@ -31,14 +31,14 @@
 
         //draw canvas --canvas.js
         if(window.innerWidth <window.innerHeight){
-            simon.drawAll(250,250);
+            simon.drawAll(250,250, simon.soundOn);
         }
         else{
-            simon.drawAll(300,300);   
+            simon.drawAll(300,300,simon.soundOn);   
         }
 
         $("#play-game, #back-to-canvas, #scoreboard-cell").hide();
-        $("#quit-game,#scoreboard, .level").fadeTo("fast",0);
+        $("#quit-game,#scoreboard,#settings, .level").fadeTo("fast",0);
 
         $("#game-wrap").fadeIn(500);
 
@@ -67,7 +67,7 @@
             
             let introSecondTimeOut=setTimeout(function(){
 
-                $("#quit-game, #play-game, #scoreboard, .level").fadeTo("slow",1);
+                $("#quit-game, #play-game, #scoreboard,#settings, .level").fadeTo("slow",1);
 
                 //funciton to set event handlers for quit and scoreboard button --helper.js
 
@@ -143,6 +143,48 @@
             $("#saved-games-modal, #back-to-new-game").hide();
 
         })
+    })
+
+    $("#settings, #sound").click(function(){
+        $("#settings-modal").modal("show");
+    })
+
+    // sound off/ sound on
+    
+    $(document).on("click","label.btn",function(){
+        $("label.btn").removeClass("btn-success"); 
+        $("label.btn").addClass("btn-secondary");
+
+        let checked = $("label.btn:first-child").attr("checked", "checked");
+
+        if(checked){
+            $(this).removeClass("btn-secondary");
+            $(this).addClass("btn-success");
+            if($(this).children(":first").attr("id")=="option1"){
+                simon.soundOn = !simon.soundOn;
+                if(window.innerWidth <window.innerHeight){
+                    simon.drawAll(250,250);
+                }
+                else{
+                    simon.drawAll();   
+                }
+                simon.level.forEach((button)=>{
+                    button.soundOn = simon.soundOn
+                })
+
+            }else{
+                simon.soundOn = !simon.soundOn;
+                if(window.innerWidth <window.innerHeight){
+                    simon.drawAll(250,250);
+                }
+                else{
+                    simon.drawAll();   
+                }
+                simon.level.forEach((button)=>{
+                    button.soundOn = simon.soundOn
+                })
+            }
+        }
     })
 
     // footer menu: when clicked will close other menus

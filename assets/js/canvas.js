@@ -25,7 +25,7 @@ simon.createCanvas = function getCanvas(canvas, width, height){
 }
 
 simon.drawObj = class CanvasObj{
-    constructor(kind = "circle", path, x, y, r, start = 0, end, color, fill = true,endColor = null, antiClockwise = false){
+    constructor(kind = "circle", path, x, y, r, start = 0, end, color, soundOn, fill = true,endColor = null, antiClockwise = false){
         this.kind = kind.toString();
         this.path = path;
         this.x = x;
@@ -38,6 +38,7 @@ simon.drawObj = class CanvasObj{
         this.fill = fill;
         this.endColor = endColor;
         this.clicked = false;
+        this.soundOn = soundOn
     }
 
     setColor(){
@@ -73,14 +74,16 @@ simon.drawObj = class CanvasObj{
             }
             
             setTimeout(()=>{
-                let soundPromise = simon.audio[this.kind].play();
-                
-                if(soundPromise !== undefined){
-                    soundPromise.then(_ =>{
-                        return
-                    }).catch(error =>{
-                        console.log(error)
-                    }); 
+                if(this.soundOn){
+                    let soundPromise = simon.audio[this.kind].play();
+                    
+                    if(soundPromise !== undefined){
+                        soundPromise.then(_ =>{
+                            return
+                        }).catch(error =>{
+                            console.log(error)
+                        }); 
+                    }
                 }
                 setTimeout(()=>{
                     simon.ctx.fillStyle = this.color;
@@ -144,13 +147,13 @@ simon.drawAll= function drawAll(canvasWidth=300, canvasHeight=300){
     this.ctx.clearRect(0,0,simon.myCanvas.width, simon.myCanvas.height)
     simon.ctx.imageSmoothingEnabled=false;
 
-    simon.circle = new simon.drawObj("circle", simon.path, simon.centerX, simon.centerY, simon.bigRadius, 0, 2, "black");
-    simon.smallCircle = new simon.drawObj("circle", simon.path, simon.centerX, simon.centerY, simon.innerCirle, 0, 2, "black");
-    simon.startCircle = new simon.drawObj("circle", simon.path, simon.centerX, simon.centerY, simon.innerCirle, 0, 2, "black", false);
-    simon.blueButton = new simon.drawObj("Blue", simon.path, simon.centerX, simon.centerY, simon.smallRadius,0.02,0.48, "blue" )
-    simon.redButton = new simon.drawObj("Red", simon.path, simon.centerX, simon.centerY, simon.smallRadius,1.52,1.98, "red", true, "#fa7268" )
-    simon.greenButton = new simon.drawObj("Green",simon.path, simon.centerX, simon.centerY, simon.smallRadius,0.52,0.98, "green" )
-    simon.yellowButton = new simon.drawObj("Yellow", simon.path, simon.centerX, simon.centerY, simon.smallRadius,1.02,1.48, "yellow" )
+    simon.circle = new simon.drawObj("circle", simon.path, simon.centerX, simon.centerY, simon.bigRadius, 0, 2, "black", simon.soundOn);
+    simon.smallCircle = new simon.drawObj("circle", simon.path, simon.centerX, simon.centerY, simon.innerCirle, 0, 2, "black", simon.soundOn);
+    simon.startCircle = new simon.drawObj("circle", simon.path, simon.centerX, simon.centerY, simon.innerCirle, 0, 2, "black", simon.soundOn, false);
+    simon.blueButton = new simon.drawObj("Blue", simon.path, simon.centerX, simon.centerY, simon.smallRadius,0.02,0.48, "blue", simon.soundOn )
+    simon.redButton = new simon.drawObj("Red", simon.path, simon.centerX, simon.centerY, simon.smallRadius,1.52,1.98, "red", simon.soundOn, true, "#fa7268" )
+    simon.greenButton = new simon.drawObj("Green",simon.path, simon.centerX, simon.centerY, simon.smallRadius,0.52,0.98, "green", simon.soundOn )
+    simon.yellowButton = new simon.drawObj("Yellow", simon.path, simon.centerX, simon.centerY, simon.smallRadius,1.02,1.48, "yellow", simon.soundOn )
     
     simon.buttonBaseArr=[simon.blueButton, simon.redButton, simon.greenButton, simon.yellowButton];
 

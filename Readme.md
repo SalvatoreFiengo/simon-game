@@ -149,20 +149,40 @@ fix: remove method from "form" selector.
 
 ## Deployment
 
+Deployment in Github:
+from github landing page once signed in go to "repositories" then click "new"
+
+-   a Master branch will be created
+
+    every time a feature was in progress I created the related branch
+
+    this can be achieved inside the master repository by clicking on Master and providing the new Branch name
+
+    It will be copied from the selected branch, usually Master
+
+    Several branches have been created, merged and once manually/jasmin tested deleted:
+
+    1. Landing page
+    2. Canvas
+    3. Jasmine-test
+    4. LocalStorage
+    5. Canvas__events_and_intro
+    6. Simon_game_basic_logic
+    7. Scoreboard
+
+- from Settings in GitHub:
+    1. scrolled down to GitHub Pages
+    2. selected source: master branch
+    3. site published on https://salvatorefiengo.github.io/simon-game
+
 All game files are hosted on GitHub "Simon-game" repository
 This website has been developed using Visual Studio Code 
-Several branches have been created, merged and once manually/jasmin tested deleted:
-- Landing page
-- Canvas
-- Jasmine-test
-- LocalStorage
-- Canvas__events_and_intro
-- Simon_game_basic_logic
-- Scoreboard
 
 
 ## Credits
 Thanks to my friend Andrew Grime for providing me with the sounds
+idea for scrollbars [css triks](https://css-tricks.com/almanac/properties/s/scrollbar/)
+and [Stackoverflow](https://stackoverflow.com/questions/43186015/css-hide-scroll-bar-but-have-element-scrollable)
 
 ### Content
 - The text for section Y was copied from the [Wikipedia article on Simon Game](https://en.wikipedia.org/wiki/Simon_(game));

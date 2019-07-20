@@ -296,7 +296,7 @@ function checkchoice(choice, playerChoices,player){
             && i == simonChoices.length-1){
             
             simon.playerCoiches = [];
-            console.log("lvl"+simon.currentLevel)
+           
             updateSavedGame(player.count, player);
             setTimeout(() => {
                 simonTurn(player);
@@ -348,7 +348,7 @@ function updateProgressBar(percentage){
 // disables quit and scoreboard "links" before the start of the game
 // sets a time out for the game itself and reset player stats with a small delay
 function simonGame(player){
-    
+
     $("#quit-game, #scoreboard").unbind("click").click(()=>{});
 
     setTimeout(()=>{
@@ -433,9 +433,9 @@ function getGamesStat(selectedTable){
             simon.currentSavedGames = JSON.parse(storage().getItem("0"));
             let id=$(this).attr("id");
             let selected = simon.currentSavedGames.indexOf(simon.currentSavedGames[id]);
-            console.log(simon.currentSavedGames[id]);
+            
             simon.currentSavedGames.splice(selected, 1);
-            console.log(simon.currentSavedGames);
+           
             storage().setItem(0,JSON.stringify(simon.currentSavedGames));
             getGamesStat(selectedTable)
         })

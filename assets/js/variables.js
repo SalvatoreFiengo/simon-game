@@ -37,6 +37,7 @@ simon.buttonBaseArr = [];
 simon.playerCoiches = [];
 
 simon.level = [];
+simon.soundOn = true;
 simon.audio = {
     "Red": new Audio("./assets/sounds/Red.mp3"),
     "Blue": new Audio("./assets/sounds/Blue.mp3"),

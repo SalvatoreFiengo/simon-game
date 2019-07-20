@@ -110,10 +110,12 @@ i {
 .btn-custom {
     border: 1.5px solid rgb(48, 44, 44);
     border-radius: 50%;
-    height: 60px;
-    width: 60px;
+    height: 63px;
+    width: 63px;
 }
-
+#switch-home-rules, #game, #sound {
+    padding: 0;
+}
 
 .hide-element {
     display: none;
@@ -166,7 +168,7 @@ i {
 }
 
 #game-table thead tr th {
-    width: 33%;
+    width: 25%;
 }
 
 table p{

@@ -23,26 +23,57 @@
 </head>
 <body>
     <div class="bckgroundImageCover"></div>
+
+    <!-- sound-modal  -->
+    <div id="settings-modal" class="modal fade text-center" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                    <h4 class="modal-title text-center" id="myModalLabel">Settings</h4>
+                </div>
+                <div id="new-game-modal" class="modal-body">
+                    
+                    <div class="form-group">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-success active">
+                                <input type="radio" name="options" id="option1" autocomplete="off" checked> Sound On
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="options" id="option2" autocomplete="off"> Sound Off
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <section id="game-wrap" class="panel panel-default bckPrimaryColor">
         <div class="table-wrap">
             <table id="game-table" class="table">
                 <thead>
                     <tr>
                         <th class="text-center">
-                            <p class="pointer" id="quit-game">Home</p>
-                            <p class="pointer" id='back-to-canvas'>Back</p>
+                            <p id="quit-game" class="pointer">Home</p>
+                            <p id='back-to-canvas' class="pointer">Back</p>
                         </th> 
                         <th class="text-center">
-                            <p class="pointer" id="scoreboard">Scoreboard</p>
+                            <p id="scoreboard" class="pointer">Scoreboard</p>
                         </th>
                         <th class="text-center">
                             <p class="level">Level :<span id="lvl" class="badge">1</span></p>
+                        </th>
+                        <th class="text-center">
+                            <p id="settings" class="pointer">Settings</p>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="canvas-cell text-center" colspan="3">
+                        <td class="canvas-cell text-center" colspan="4">
                             <canvas class="pointer" id="canvas"></canvas>
                             <div id="game-paused" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -76,7 +107,7 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                                 <button id="back-to-new-game" type="button" class="btn btn-success">New Game?</button>
-                                                <button id="play-game" type="submit" class="btn btn-success">Play</button>
+                                                <button id="play-game" type="button" class="btn btn-success">Play</button>
                                                 <button id="load-game" type="button" class="btn btn-success">Load Game</button>
                                             </div>
                                         </form>
@@ -86,7 +117,7 @@
                         </td>
                     </tr>
                     <tr>  
-                        <td id="scoreboard-cell" colspan="3">
+                        <td id="scoreboard-cell" colspan="4">
                             <table id="scoreboard-table" class="table-condensed table-bordered text-center">
                                 <thead>
                                     <tr><th></th></tr>
@@ -100,7 +131,7 @@
                 </tbody>
                 <tfoot id="footer-progress-bar">
                     <tr>
-                        <td colspan="3">
+                        <td colspan="4">
                             <div class="progress-wrap center-block text-center">
                                 <h4 class="green">to next level</h4>
                                 <div class="progress">
@@ -139,7 +170,7 @@
                             <button id="game" class="btn btn-custom buttonBckRed">Game</button>
                         </div>
                         <div class="col-xs-4">
-                            <button class="btn btn-custom buttonBckYellow">Help</button>
+                            <button id="sound" class="btn btn-custom buttonBckYellow">Sound</button>
                         </div>
                     </div>
                 </div>    
@@ -192,8 +223,7 @@
                 </ul>                
             </div>
         </div>
-    </footer> 
-
+    </footer>
     <!--Loading jQuery 3.4.0 minified-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 

@@ -71,7 +71,7 @@
 
                 //funciton to set event handlers for quit and scoreboard button --helper.js
 
-                setQuitandScoreboardButton(); 
+                setScoreboardButton(); 
 
                 simon.smallCircle.draw();
                 simon.canvasText("green", "Start");
@@ -143,6 +143,14 @@
             $("#saved-games-modal, #back-to-new-game").hide();
 
         })
+    })
+        
+    $("#quit-game").click(function() {
+        $("#quit-modal").modal("show");
+        $("#quit-confirm").click(function(){
+            simon.isPlayerTurn=false;
+            quitGame();
+        });
     })
 
     $("#settings, #sound").click(function(){

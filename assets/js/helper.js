@@ -93,6 +93,17 @@ function getNewPlayer(){
         }else{
         simon.player.name = "Player "+simon.currentSavedGames.length;
         }
+    }else if(simon.currentSavedGames !== null){
+        let count=0;
+        playerName = simon.player.name.split(" ")
+        simon.currentSavedGames.forEach((item)=>{
+            selected = item.name.split(" ")
+            if(item.name.toLowerCase() == simon.player.name.toLowerCase() 
+            || selected[0].toLowerCase() == playerName[0].toLowerCase()){
+                count+=1
+            } 
+        });
+        simon.player.name = simon.player.name+" ("+count+")";
     }   
     simon.currentSavedGames != null ? simon.currentSavedGames: simon.currentSavedGames = [];
     simon.player.id = simon.currentSavedGames.length;
@@ -139,7 +150,7 @@ function loadPlayer(){
     })
 }
 
-//Updates Player stat every game cycle 
+//Updates Player stat every game cycle and if quit
 
 function updateSavedGame(count, player){
 
@@ -182,14 +193,6 @@ function getRandomButton() {
 // at lvl 20 Player wins 
 
 function simonTurn (player){
-    $("#quit-game").unbind("click").click(()=>{
-
-        $("#quit-game").text("Disabled while playing").addClass("red");
-            setTimeout(() => {
-            $("#quit-game").removeClass("red").text("Home");
-        }, 500);
-    })
-
     $("#scoreboard").unbind("click").click(()=>{
 
         $("#scoreboard").text("Disabled while playing").addClass("red")
@@ -284,7 +287,7 @@ function playerChosenButton(move, player){
 
 function checkchoice(choice, playerChoices,player){
 
-    setQuitandScoreboardButton();
+    setScoreboardButton();
     clearInterval(choice)
 
     let simonChoices= simon.level.map((item)=>item.kind);
@@ -315,7 +318,7 @@ function checkchoice(choice, playerChoices,player){
 
                 alert("Game Over");
                 updateSavedGame(player.count, player);
-                setQuitandScoreboardButton();
+                setScoreboardButton();
                 updateProgressBar(100);
 
                 simon.level = [];
@@ -337,6 +340,7 @@ function checkchoice(choice, playerChoices,player){
     }
   
 }
+
 // progress bar will be updated in simon turn based on player.count = how many times Player got it right
 // every 5 times it resets to 0 and lvl badge increments of 1
 function updateProgressBar(percentage){
@@ -349,31 +353,39 @@ function updateProgressBar(percentage){
 // sets a time out for the game itself and reset player stats with a small delay
 function simonGame(player){
 
-    $("#quit-game, #scoreboard").unbind("click").click(()=>{});
+    $("#scoreboard").unbind("click").click(()=>{});
 
     setTimeout(()=>{
         setTimeout(()=>{
             simonTurn(player);
-            resetPlayer(simon.player);
+            
         },simon.speed+50)
         
     },simon.speed+100) 
 }
-// scoreboard and load game as funciton so that can be called again to be set unset
 
-function setQuitandScoreboardButton(){
-    
-    $("#quit-game").click(function() {
+function quitGame(){
+    simon.currentSavedGames = JSON.parse(storage().getItem("0"));
+    if(simon.currentSavedGames !== null){
+        updateSavedGame(simon.player.count, simon.player)
+    }
+    resetPlayer(simon.player);
+    simon.level = [];
 
-        resetPlayer(simon.player);
-        simon.level = [];
-        updateProgressBar(100);
-        $(".canvas-cell").fadeIn();
+    simon.smallCircle.draw()
+    simon.canvasText("green", "Start")
 
-        $("#game-wrap").fadeOut(200);
-       
-        $("#main-page").slideDown(200);
-    })
+    updateProgressBar(100);
+
+    $(".canvas-cell").fadeIn();
+
+    $("#game-wrap").fadeOut(200);
+   
+    $("#main-page").slideDown(200);
+}
+// reset scoreboard click, it will be disabled during game
+
+function setScoreboardButton(){
 
     $("#scoreboard").unbind("click").click(function(){
            
@@ -393,14 +405,17 @@ function resetPlayer(player){
     player.simonLevel = [];
     player.numberOfGames = 0;
 }
+
 // updates game stat in scoreboard
 function getGamesStat(selectedTable){
     simon.currentSavedGames = JSON.parse(storage().getItem("0"));
 
     $(selectedTable+" thead,"+selectedTable+" tbody").empty();
     
-    $("#back-to-canvas").show();
-    $("#quit-game").hide();
+    if(selectedTable == "#scoreboard-table"){
+        $("#back-to-canvas").show();
+        $("#quit-game").hide();
+    }
 
     if(simon.currentSavedGames != null && simon.currentSavedGames != undefined && simon.currentSavedGames.length>0){
         
@@ -409,7 +424,7 @@ function getGamesStat(selectedTable){
 
 
 
-        if(simon.currentSavedGames.length>1 && selectedTable == "#scoreboard"){
+        if(simon.currentSavedGames.length>1){
             simon.currentSavedGames.sort(function(a, b){
                 return b.score-a.score
             });

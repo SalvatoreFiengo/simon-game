@@ -23,7 +23,46 @@
 </head>
 <body>
     <div class="bckgroundImageCover"></div>
-
+    <!-- new game/load game modal -->
+    <div id="game-paused" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                    <h4 class="modal-title text-center" id="myModalLabel">Simon Game</h4>
+                </div>
+                <form action="#">
+                    <div id="new-game-modal" class="modal-body">
+                        
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" aria-required="true" maxlength="10">
+                        </div>
+                        
+                    </div>
+                    <div id="saved-games-modal" class="modal-body">
+                        <div class="form-group">
+                            <h4><strong>Saved Games</strong></h4>
+                            <table id="saved-games" class="table table-condensed table-hover">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                    </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button id="back-to-new-game" type="button" class="btn btn-success">New Game?</button>
+                        <button id="play-game" type="button" class="btn btn-success">Play</button>
+                        <button id="load-game" type="button" class="btn btn-success">Load Game</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- sound-modal  -->
     <div id="settings-modal" class="modal fade text-center" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -32,7 +71,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
                     <h4 class="modal-title text-center" id="myModalLabel">Settings</h4>
                 </div>
-                <div id="new-game-modal" class="modal-body">
+                <div class="modal-body">
                     
                     <div class="form-group">
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -46,6 +85,29 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- quit-game-modal -->
+    <div id="quit-modal" class="modal fade text-center" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                    <h4 class="modal-title text-center" id="myModalLabel">Quit game</h4>
+                </div>
+                <div class="modal-body">
+                    <div>  
+                        <h1>Do you have to leave?</h1>
+                        <h4>If you have an ongoing game it will be saved</h4>
+                        <h4>Feel free to come back and load it again</h4>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Resume</button>
+                    <button id="quit-confirm" type="button" class="btn btn-danger" data-dismiss="modal">Quit</button>
                 </div>
             </div>
         </div>
@@ -57,7 +119,7 @@
                 <thead>
                     <tr>
                         <th class="text-center">
-                            <p id="quit-game" class="pointer">Home</p>
+                            <p id="quit-game" class="pointer">Quit</p>
                             <p id='back-to-canvas' class="pointer">Back</p>
                         </th> 
                         <th class="text-center">
@@ -75,45 +137,6 @@
                     <tr>
                         <td class="canvas-cell text-center" colspan="4">
                             <canvas class="pointer" id="canvas"></canvas>
-                            <div id="game-paused" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
-                                            <h4 class="modal-title text-center" id="myModalLabel">Simon Game</h4>
-                                        </div>
-                                        <form action="#">
-                                            <div id="new-game-modal" class="modal-body">
-                                                
-                                                <div class="form-group">
-                                                    <label for="name">Name</label>
-                                                    <input type="text" class="form-control" id="name" aria-required="true" maxlength="10">
-                                                </div>
-                                                
-                                            </div>
-                                            <div id="saved-games-modal" class="modal-body">
-                                                <div class="form-group">
-                                                    <h4><strong>Saved Games</strong></h4>
-                                                    <table id="saved-games" class="table table-condensed table-hover">
-                                                            <thead>
-                                                            </thead>
-                                                            <tbody>
-                                                            </tbody>
-                                                            <tfoot>
-                                                            </tfoot>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                                <button id="back-to-new-game" type="button" class="btn btn-success">New Game?</button>
-                                                <button id="play-game" type="button" class="btn btn-success">Play</button>
-                                                <button id="load-game" type="button" class="btn btn-success">Load Game</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
                         </td>
                     </tr>
                     <tr>  
